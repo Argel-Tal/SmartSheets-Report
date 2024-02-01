@@ -1,0 +1,5257 @@
+{
+  "compatibilityLevel": 1567,
+  "model": {
+    "annotations": [
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      },
+      {
+        "name": "PBIDesktopVersion",
+        "value": "2.124.2028.0 (23.12)"
+      },
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"Levels\",\"Portfolio\",\"Intake Sheet\",\"Projects Stg\",\"Reports\",\"PMO Templates\",\"Views\",\"Tables\",\"Portfolio Metrics\",\"Overdue\",\"Schedule Report\",\"Escalating Report\",\"Milestones\",\"Metadata\",\"Project Contacts\",\"Decision Log\",\"Schedule Table\",\"Risk Register\",\"Active Projects\",\"Intake\",\"At Risk\",\"Lessons Learned\",\"Projects\",\"Schedule Table (complete errors)\",\"Schedule Table (all errors)\",\"Measures Table\",\"Index Health\",\"Index Category\",\"Schedule Parents\",\"Schedule Children\",\"Project Status\",\"Index Status\",\"Portfolio Managers\",\"Index Roles\",\"Index Risk Status\",\"Index Decision Status\"]"
+      },
+      {
+        "name": "PBI_ProTooling",
+        "value": "[\"DevMode\"]"
+      }
+    ],
+    "culture": "en-US",
+    "cultures": [
+      {
+        "name": "en-US",
+        "linguisticMetadata": {
+          "content": {
+            "DynamicImprovement": "HighConfidence",
+            "Language": "en-US",
+            "Version": "1.0.0"
+          },
+          "contentType": "json"
+        }
+      }
+    ],
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "expressions": [
+      {
+        "name": "Levels",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = Smartsheet.Tables(),",
+          "    #\"6491583995504516\" = Source{[Key=\"6491583995504516\"]}[Data],",
+          "    #\"5557254175909764\" = #\"6491583995504516\"{[Key=\"5557254175909764\"]}[Data]",
+          "in",
+          "    #\"5557254175909764\""
+        ],
+        "kind": "m",
+        "lineageTag": "61b1c538-afb1-460c-9669-cf79c7e8ef9d",
+        "queryGroup": "01 Load\\01.01 Source"
+      },
+      {
+        "name": "Reports",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = Portfolio,",
+          "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([Name] = \"Admin & Reports\")),",
+          "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered Rows\",{\"Name\", \"Key\", \"Data\"}),",
+          "    #\"Expanded Data\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data\", {\"Name\", \"Key\", \"Data\", \"ItemKind\", \"ItemName\", \"IsLeaf\"}, {\"Name.1\", \"Key.1\", \"Data.1\", \"ItemKind\", \"ItemName\", \"IsLeaf\"}),",
+          "    #\"Removed Errors\" = Table.RemoveRowsWithErrors(#\"Expanded Data\", {\"Data.1\"})",
+          "in",
+          "    #\"Removed Errors\""
+        ],
+        "kind": "m",
+        "lineageTag": "08535fd8-f8ec-40f0-9c94-e5624c735d3a",
+        "queryGroup": "01 Load\\01.04 Reports"
+      },
+      {
+        "name": "Portfolio",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = Levels,",
+          "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([Name] = \"Portfolio Level\")),",
+          "    Custom1 = #\"Filtered Rows\"[Data],",
+          "    #\"Converted to Table\" = Table.FromList(Custom1, Splitter.SplitByNothing(), null, null, ExtraValues.Error),",
+          "    #\"Expanded Column1\" = Table.ExpandTableColumn(#\"Converted to Table\", \"Column1\", {\"Name\", \"Key\", \"Data\", \"ItemKind\", \"ItemName\", \"IsLeaf\"}, {\"Name\", \"Key\", \"Data\", \"ItemKind\", \"ItemName\", \"IsLeaf\"})",
+          "in",
+          "    #\"Expanded Column1\""
+        ],
+        "kind": "m",
+        "lineageTag": "58766cd9-e75e-4f15-8734-dbc2ccd7100d",
+        "queryGroup": "01 Load\\01.02 Staging"
+      },
+      {
+        "name": "Views",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = #\"Projects Stg\",",
+          "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([ItemKind] = \"View\")),",
+          "    #\"Removed Errors\" = Table.RemoveRowsWithErrors(#\"Filtered Rows\", {\"Data.1\"}),",
+          "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Removed Errors\",{\"Project name\", \"Project Key\", \"Object name\", \"Object Key\", \"Data.1\"})",
+          "in",
+          "    #\"Removed Other Columns\""
+        ],
+        "kind": "m",
+        "lineageTag": "11967518-c952-4b40-a86d-34366ab1d574",
+        "queryGroup": "03 Projects\\03.01 Staging"
+      },
+      {
+        "name": "Tables",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = #\"Projects Stg\",",
+          "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([ItemKind] = \"Table\")),",
+          "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered Rows\",{\"Project name\", \"Project Key\", \"Object name\", \"Object Key\", \"Data.1\"})",
+          "in",
+          "    #\"Removed Other Columns\""
+        ],
+        "kind": "m",
+        "lineageTag": "6d383d5c-0ad1-4263-880c-f6ff221e0a45",
+        "queryGroup": "03 Projects\\03.01 Staging"
+      },
+      {
+        "name": "Projects Stg",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = Levels,",
+          "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([Name] = \"Project Level\")),",
+          "    Custom1 = #\"Filtered Rows\"[Data],",
+          "    #\"Converted to Table\" = Table.FromList(Custom1, Splitter.SplitByNothing(), null, null, ExtraValues.Error),",
+          "    #\"Expanded Column1\" = Table.ExpandTableColumn(#\"Converted to Table\", \"Column1\", {\"Name\", \"Key\", \"Data\", \"ItemKind\", \"ItemName\", \"IsLeaf\"}, {\"Name\", \"Key\", \"Data\", \"ItemKind\", \"ItemName\", \"IsLeaf\"}),",
+          "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Expanded Column1\",{\"Name\", \"Key\", \"Data\"}), ",
+          "    #\"Expanded Data\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data\", {\"Name\", \"Key\", \"Data\", \"ItemKind\", \"ItemName\", \"IsLeaf\"}, {\"Item\", \"Key.1\", \"Data.1\", \"ItemKind\", \"ItemName\", \"IsLeaf\"}),",
+          "    #\"Removed Errors\" = Table.RemoveRowsWithErrors(#\"Expanded Data\", {\"Data.1\"}),",
+          "    #\"Renamed Columns\" = Table.RenameColumns(#\"Removed Errors\",{{\"Name\", \"Project name\"}, {\"Key\", \"Project Key\"}, {\"Item\", \"Object name\"}, {\"Key.1\", \"Object Key\"}})",
+          "in",
+          "    #\"Renamed Columns\""
+        ],
+        "kind": "m",
+        "lineageTag": "447cf894-87af-4a55-979f-7c45cd054e13",
+        "queryGroup": "01 Load\\01.02 Staging"
+      },
+      {
+        "name": "PMO Templates",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = Portfolio,",
+          "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([Name] = \"PMO TEMPLATES\")),",
+          "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered Rows\",{\"Name\", \"Key\", \"Data\"}),",
+          "    #\"Expanded Data\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data\", {\"Name\", \"Key\", \"Data\", \"ItemKind\", \"ItemName\", \"IsLeaf\"}, {\"Name.1\", \"Key.1\", \"Data.1\", \"ItemKind\", \"ItemName\", \"IsLeaf\"}),",
+          "    #\"Removed Other Columns1\" = Table.SelectColumns(#\"Expanded Data\",{\"Name.1\", \"Key.1\", \"Data.1\"}),",
+          "    #\"Expanded Data.1\" = Table.ExpandTableColumn(#\"Removed Other Columns1\", \"Data.1\", {\"Name\", \"Key\", \"Data\", \"ItemKind\", \"ItemName\", \"IsLeaf\"}, {\"Name.2\", \"Key.2\", \"Data\", \"ItemKind.1\", \"ItemName.1\", \"IsLeaf.1\"}),",
+          "    #\"Removed Errors\" = Table.RemoveRowsWithErrors(#\"Expanded Data.1\", {\"Data\"})",
+          "in",
+          "    #\"Removed Errors\""
+        ],
+        "kind": "m",
+        "lineageTag": "56316f8f-c3a1-4425-8117-bc37a5a72d09",
+        "queryGroup": "01 Load\\01.03 Templates"
+      },
+      {
+        "name": "Escalating Report",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "description": [
+          "This has no data in it at all",
+          "Turned off for now"
+        ],
+        "expression": [
+          "let",
+          "    Source = Views,",
+          "    #\"Filtered Rows\" = Table.SelectRows(Source, each Text.Contains([Object name], \"Escalat\")),",
+          "    #\"Expanded Data.1\" = Table.ExpandTableColumn(#\"Filtered Rows\", \"Data.1\", {\"RowNumber\", \"Primary\", \"Risk / Issue ID\", \"Risk or Issue?\", \"Status\", \"Risk or Issue Detail\", \"Status Update\", \"Actual Consequence\", \"Actual Likelihood\", \"Actual Rating\", \"Assigned To\", \"Mitigation\"}, {\"RowNumber\", \"Primary\", \"Risk / Issue ID\", \"Risk or Issue?\", \"Status\", \"Risk or Issue Detail\", \"Status Update\", \"Actual Consequence\", \"Actual Likelihood\", \"Actual Rating\", \"Assigned To\", \"Mitigation\"})",
+          "in",
+          "    #\"Expanded Data.1\""
+        ],
+        "kind": "m",
+        "lineageTag": "0f6ad192-6c44-4d83-a880-cc11bfa8f764",
+        "queryGroup": "03 Projects\\03.02 Views"
+      },
+      {
+        "name": "Schedule Table (complete errors)",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "description": "% value in Complete column have come in wrong, would need to do some string detection, delimeter stuff and then x/100 what's been entered",
+        "expression": [
+          "let",
+          "    Source = Tables,",
+          "    #\"Filtered Rows\" = Table.SelectRows(Source, each Text.Contains([Object name], \"Schedule\")),",
+          "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered Rows\",{\"Project name\", \"Project Key\", \"Object Key\", \"Data.1\"}),",
+          "    #\"Expanded Data.1\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data.1\", {\"MS\", \"Schedule Health\", \"Task Name\", \"Update\", \"Status\", \"Assigned To\", \"Start Date\", \"End Date\", \"% Complete\", \"Duration\", \"Predecessors\", \"Target Start Date\", \"Target End Date\", \"Budget\", \"Cost\", \"Current Spend\", \"Difference of Current Spend & Budget\", \"Schedule Delta (%)\", \"Schedule Delta (Working Days)\"}, {\"MS\", \"Schedule Health\", \"Task Name\", \"Update\", \"Status\", \"Assigned To\", \"Start Date\", \"End Date\", \"% Complete\", \"Duration\", \"Predecessors\", \"Target Start Date\", \"Target End Date\", \"Budget\", \"Cost\", \"Current Spend\", \"Difference of Current Spend & Budget\", \"Schedule Delta (%)\", \"Schedule Delta (Working Days)\"}),",
+          "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Expanded Data.1\",{{\"Start Date\", type datetimezone}, {\"End Date\", type datetimezone}}),",
+          "    #\"Extracted Text Before Delimiter\" = Table.TransformColumns(#\"Changed Type\", {{\"Duration\", each Text.BeforeDelimiter(_, \"d\"), type text}}),",
+          "    #\"Filtered Rows1\" = Table.SelectRows(#\"Extracted Text Before Delimiter\", each [Task Name] = \"Get familiar with the overall documentation\" or [Task Name] = \"Business requirements specification document - third draft\")",
+          "in",
+          "    #\"Filtered Rows1\""
+        ],
+        "kind": "m",
+        "lineageTag": "aa54833b-1d5f-4973-b786-c9d523d6707d",
+        "queryGroup": "99 Errors"
+      },
+      {
+        "name": "Schedule Table (all errors)",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = Tables,",
+          "    #\"Filtered Rows\" = Table.SelectRows(Source, each Text.Contains([Object name], \"Schedule\")),",
+          "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered Rows\",{\"Project name\", \"Project Key\", \"Object Key\", \"Data.1\"}),",
+          "    #\"Expanded Data.1\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data.1\", {\"MS\", \"Schedule Health\", \"Task Name\", \"Update\", \"Status\", \"Assigned To\", \"Start Date\", \"End Date\", \"% Complete\", \"Duration\", \"Predecessors\", \"Target Start Date\", \"Target End Date\", \"Budget\", \"Cost\", \"Current Spend\", \"Difference of Current Spend & Budget\", \"Schedule Delta (%)\", \"Schedule Delta (Working Days)\"}, {\"MS\", \"Schedule Health\", \"Task Name\", \"Update\", \"Status\", \"Assigned To\", \"Start Date\", \"End Date\", \"% Complete\", \"Duration\", \"Predecessors\", \"Target Start Date\", \"Target End Date\", \"Budget\", \"Cost\", \"Current Spend\", \"Difference of Current Spend & Budget\", \"Schedule Delta (%)\", \"Schedule Delta (Working Days)\"}),",
+          "    #\"Extracted Text Before Delimiter\" = Table.TransformColumns(#\"Expanded Data.1\", {{\"Duration\", each Text.BeforeDelimiter(_, \"d\"), type text}}),",
+          "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Extracted Text Before Delimiter\",{{\"Start Date\", type datetimezone}, {\"End Date\", type datetimezone}, {\"% Complete\", Percentage.Type}, {\"Duration\", Int64.Type}, {\"Target Start Date\", type date}, {\"Target End Date\", type date}, {\"Schedule Delta (Working Days)\", Int64.Type}}),",
+          "    #\"Kept Errors\" = Table.SelectRowsWithErrors(#\"Changed Type\", {\"Project name\", \"Project Key\", \"Object Key\", \"MS\", \"Schedule Health\", \"Task Name\", \"Update\", \"Status\", \"Assigned To\", \"Start Date\", \"End Date\", \"% Complete\", \"Duration\", \"Predecessors\", \"Target Start Date\", \"Target End Date\", \"Budget\", \"Cost\", \"Current Spend\", \"Difference of Current Spend & Budget\", \"Schedule Delta (%)\", \"Schedule Delta (Working Days)\"})",
+          "in",
+          "    #\"Kept Errors\""
+        ],
+        "kind": "m",
+        "lineageTag": "f45d1e1c-1362-4639-9f8d-9b8988f9b5b5",
+        "queryGroup": "99 Errors"
+      },
+      {
+        "name": "Project Status",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = #\"Schedule Table\",",
+          "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([RowNumber] = 1)),",
+          "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered Rows\",{\"Project Key\", \"% Complete\", \"Assigned To\", \"Update\", \"Duration\"})",
+          "in",
+          "    #\"Removed Other Columns\""
+        ],
+        "kind": "m",
+        "lineageTag": "d0bd4f37-ea9f-40b4-b96c-6ecc868cf98a",
+        "queryGroup": "03 Projects\\03.03 Tables\\03.03.01 Schedule"
+      },
+      {
+        "name": "Active Projects",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = Reports,",
+          "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([Name.1] = \"Active Projects\")),",
+          "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered Rows\",{\"Data.1\"}),",
+          "    #\"Expanded Data.1\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data.1\", {\"Project Name\", \"Start Date\", \"End Date\", \"Project Status\", \"Schedule At Risk\"}, {\"Project Name\", \"Start Date\", \"End Date\", \"Project Status\", \"Schedule At Risk\"}),",
+          "    #\"Added Custom\" = Table.AddColumn(#\"Expanded Data.1\", \"Active\", each \"TRUE\"),",
+          "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Added Custom\",{{\"Active\", type logical}})",
+          "in",
+          "    #\"Changed Type\""
+        ],
+        "kind": "m",
+        "lineageTag": "3493da7a-4d2b-4983-8d34-67a852269c81",
+        "queryGroup": "01 Load\\01.04 Reports"
+      },
+      {
+        "name": "Intake",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = Reports,",
+          "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([Name.1] = \"Portfolio Intake\")),",
+          "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered Rows\",{\"Name.1\", \"Key.1\", \"Data.1\"}),",
+          "    #\"Expanded Data.1\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data.1\", {\"RowNumber\", \"Project ID\", \"Primary\", \"Program Name\", \"Project Sponsor\", \"Project Sponsor Approval\", \"Project Status\", \"Start Date\", \"End Date\", \"Project Owner\", \"Project Manager\"}, {\"RowNumber\", \"Project ID\", \"Primary\", \"Program Name\", \"Project Sponsor\", \"Project Sponsor Approval\", \"Project Status\", \"Start Date\", \"End Date\", \"Project Owner\", \"Project Manager\"}),",
+          "    #\"Removed Top Rows\" = Table.Skip(#\"Expanded Data.1\",1)",
+          "in",
+          "    #\"Removed Top Rows\""
+        ],
+        "kind": "m",
+        "lineageTag": "5f1823e6-fbb6-4f79-9845-c840f9660ed1",
+        "queryGroup": "01 Load\\01.04 Reports"
+      },
+      {
+        "name": "At Risk",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = Reports,",
+          "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([Name.1] = \"Projects At Risk\")),",
+          "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered Rows\",{\"Name.1\", \"Key.1\", \"Data.1\"}),",
+          "    #\"Expanded Data.1\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data.1\", {\"Dashboard Link\", \"Project Name\", \"Schedule At Risk\", \"Start Date\", \"End Date\", \"Project Status\", \"Project Update\"}, {\"Dashboard Link\", \"Project Name\", \"Schedule At Risk\", \"Start Date\", \"End Date\", \"Project Status\", \"Project Update\"}),",
+          "    #\"Added at risk\" = Table.AddColumn(#\"Expanded Data.1\", \"At Risk\", each \"TRUE\"),",
+          "    #\"Changed at risk to True\" = Table.TransformColumnTypes(#\"Added at risk\",{{\"At Risk\", type logical}})",
+          "in",
+          "    #\"Changed at risk to True\""
+        ],
+        "kind": "m",
+        "lineageTag": "07e62d0b-babf-45df-bdfa-2bd9439ffcda",
+        "queryGroup": "01 Load\\01.04 Reports"
+      },
+      {
+        "name": "Metadata",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = Tables,",
+          "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([Object name] = \"Project Metadata\")),",
+          "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered Rows\",{\"Project name\", \"Project Key\", \"Object Key\", \"Data.1\"}),",
+          "    #\"Expanded Data.1\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data.1\", {\"RowNumber\", \"NOTES\", \"Project ID\", \"Project Name\", \"Project Category\", \"Project Manager\", \"Project Sponsor\", \"Project Owner\", \"Target Start Date\", \"Target End Date\", \"Start Date\", \"End Date\", \"Project Dashboard Link\", \"Schedule At Risk\", \"Project Status\", \"Project Update\"}, {\"RowNumber\", \"NOTES\", \"Project ID\", \"Project Name.1\", \"Project Category\", \"Project Manager\", \"Project Sponsor\", \"Project Owner\", \"Target Start Date\", \"Target End Date\", \"Start Date\", \"End Date\", \"Project Dashboard Link\", \"Schedule At Risk\", \"Project Status\", \"Project Update\"}),",
+          "    #\"Filtered Rows1\" = Table.SelectRows(#\"Expanded Data.1\", each [Project ID] <> \"Project ID\"),",
+          "    #\"Filtered Rows2\" = Table.SelectRows(#\"Filtered Rows1\", each [Project ID] <> null and [Project ID] <> \"\"),",
+          "    #\"Changed Start/End to date\" = Table.TransformColumnTypes(#\"Filtered Rows2\",{{\"Start Date\", type date}, {\"End Date\", type date}}),",
+          "    #\"Added is target undefined\" = Table.AddColumn(#\"Changed Start/End to date\", \"Target Undefined\", each Text.Contains([Target Start Date], \"TB\") or Text.Contains([Target Start Date], \"#NO\") or Text.Contains([Target End Date], \"TB\") or Text.Contains([Target End Date], \"#NO\") or [Target Start Date] = null or [Target End Date] = null),",
+          "    #\"Added catched target start date\" = Table.AddColumn(#\"Added is target undefined\", \"Target Start\", each if (Text.Contains([Target Start Date], \"#NO\") or  Text.Contains([Target Start Date], \"TB\") or [Target Start Date] = null) then null else Date.From([Target Start Date])),",
+          "    #\"Added catched target end date\" = Table.AddColumn(#\"Added catched target start date\", \"Target End\", each if (Text.Contains([Target End Date], \"#NO\") or  Text.Contains([Target End Date], \"TB\") or [Target End Date] = null) then null else Date.From([Target End Date])),",
+          "    #\"Removed Old target cols & others\" = Table.RemoveColumns(#\"Added catched target end date\",{\"Target Start Date\", \"Target End Date\", \"NOTES\", \"RowNumber\", \"Project Update\"}),",
+          "    #\"Renamed Columns\" = Table.RenameColumns(#\"Removed Old target cols & others\",{{\"Project Name.1\", \"Project Short Name\"}})",
+          "in",
+          "    #\"Renamed Columns\""
+        ],
+        "kind": "m",
+        "lineageTag": "1f211c9c-ce69-4573-bf27-d886206cc73e",
+        "queryGroup": "03 Projects\\03.03 Tables"
+      }
+    ],
+    "queryGroups": [
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "1"
+          }
+        ],
+        "folder": "01 Load"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "3"
+          }
+        ],
+        "folder": "03 Projects"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "2"
+          }
+        ],
+        "folder": "01 Load\\01.03 Templates"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "0"
+          }
+        ],
+        "folder": "03 Projects\\03.01 Staging"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "1"
+          }
+        ],
+        "folder": "03 Projects\\03.02 Views"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "2"
+          }
+        ],
+        "folder": "03 Projects\\03.03 Tables"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "0"
+          }
+        ],
+        "folder": "01 Load\\01.01 Source"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "1"
+          }
+        ],
+        "folder": "01 Load\\01.02 Staging"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "3"
+          }
+        ],
+        "folder": "01 Load\\01.04 Reports"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "4"
+          }
+        ],
+        "folder": "99 Errors"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "0"
+          }
+        ],
+        "folder": "00 Utilities"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "2"
+          }
+        ],
+        "folder": "02 Index Tables"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "0"
+          }
+        ],
+        "folder": "03 Projects\\03.03 Tables\\03.03.01 Schedule"
+      }
+    ],
+    "relationships": [
+      {
+        "name": "6aeeebcc-4f54-4365-8933-9e9d9394f8e1",
+        "fromColumn": "Project Key",
+        "fromTable": "Overdue",
+        "toColumn": "Project Key",
+        "toTable": "Projects"
+      },
+      {
+        "name": "937dfd04-75f8-445d-a08c-9f1704492df9",
+        "fromColumn": "Project Key",
+        "fromTable": "Decision Log",
+        "toColumn": "Project Key",
+        "toTable": "Projects"
+      },
+      {
+        "name": "f0d4f44b-d28a-4d63-b86d-ab5cb0b5da7a",
+        "fromColumn": "Project Key",
+        "fromTable": "Risk Register",
+        "toColumn": "Project Key",
+        "toTable": "Projects"
+      },
+      {
+        "name": "6552d5c1-938d-44f1-8c77-2c885ac8c294",
+        "fromColumn": "Project Key",
+        "fromTable": "Schedule Table",
+        "toColumn": "Project Key",
+        "toTable": "Projects"
+      },
+      {
+        "name": "29612067-70f6-40a2-b50a-2ac41a43d502",
+        "fromColumn": "Project Key",
+        "fromTable": "Schedule Report",
+        "toColumn": "Project Key",
+        "toTable": "Projects"
+      },
+      {
+        "name": "536358d7-1ece-4784-895d-acfb82cc282c",
+        "fromColumn": "Project Key",
+        "fromTable": "Milestones",
+        "toColumn": "Project Key",
+        "toTable": "Projects"
+      },
+      {
+        "name": "b8bd1a52-5e2f-439f-8c02-d20735a0e307",
+        "fromColumn": "Project Key",
+        "fromTable": "Lessons Learned",
+        "toColumn": "Project Key",
+        "toTable": "Projects"
+      },
+      {
+        "name": "5cd22de3-5a4f-40f8-9397-2a3804311bce",
+        "fromColumn": "Schedule Health",
+        "fromTable": "Schedule Table",
+        "isActive": false,
+        "toColumn": "Risk Grade",
+        "toTable": "Index Health"
+      },
+      {
+        "name": "d5082135-0c68-3973-db24-993a671b15bc",
+        "crossFilteringBehavior": "bothDirections",
+        "fromCardinality": "one",
+        "fromColumn": "Project ID",
+        "fromTable": "Intake Sheet",
+        "toColumn": "Project ID",
+        "toTable": "Projects"
+      },
+      {
+        "name": "76c8de4a-9825-4e2d-aa6b-ab2b0a5d78e9",
+        "fromColumn": "Project Key",
+        "fromTable": "Project Contacts",
+        "toColumn": "Project Key",
+        "toTable": "Projects"
+      },
+      {
+        "name": "9199fc18-dd50-4236-a967-49db4c3357a1",
+        "fromColumn": "Role",
+        "fromTable": "Project Contacts",
+        "toColumn": "Role",
+        "toTable": "Index Roles"
+      },
+      {
+        "name": "aa228042-bec7-42f6-8a2e-1c0a444a8bb3",
+        "fromColumn": "Status",
+        "fromTable": "Milestones",
+        "isActive": false,
+        "toColumn": "Status",
+        "toTable": "Index Status"
+      },
+      {
+        "name": "8901fce2-76b5-4d9b-b5ae-869639d9f4a7",
+        "fromColumn": "Status",
+        "fromTable": "Schedule Table",
+        "isActive": false,
+        "toColumn": "Status",
+        "toTable": "Index Status"
+      },
+      {
+        "name": "b15bee82-e3b8-18f6-aad2-b644a233bafa",
+        "fromColumn": "Project Category",
+        "fromTable": "Projects",
+        "toColumn": "Category",
+        "toTable": "Index Category"
+      },
+      {
+        "name": "8c897b79-12a0-789f-15b4-de0269eb5ddc",
+        "fromColumn": "Project Manager",
+        "fromTable": "Projects",
+        "toColumn": "Contact",
+        "toTable": "Portfolio Managers"
+      },
+      {
+        "name": "9162ffa0-5640-35b8-c19b-003928b29688",
+        "fromColumn": "Project Status",
+        "fromTable": "Projects",
+        "toColumn": "Status",
+        "toTable": "Index Status"
+      },
+      {
+        "name": "2b7c57e9-39ab-aec1-3dc6-10a6a71450d1",
+        "fromColumn": "Schedule At Risk",
+        "fromTable": "Projects",
+        "toColumn": "Risk Grade",
+        "toTable": "Index Health"
+      },
+      {
+        "name": "24a897a4-4c5b-49a8-8f57-67aa46af78b4",
+        "fromColumn": "Status",
+        "fromTable": "Risk Register",
+        "toColumn": "Risk Status",
+        "toTable": "Index Risk Status"
+      },
+      {
+        "name": "c1670679-97a2-45ab-92b8-f3bed5b62cf0",
+        "fromColumn": "Status",
+        "fromTable": "Decision Log",
+        "toColumn": "Decision Status",
+        "toTable": "Index Decision Status"
+      }
+    ],
+    "sourceQueryCulture": "en-AU",
+    "tables": [
+      {
+        "name": "Intake Sheet",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Project ID",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "41ca38f5-e1c3-478f-a153-f820f9bba747",
+            "sourceColumn": "Project ID",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "720b0766-1b4e-4925-8e52-472d0e7e7634",
+            "sourceColumn": "Project Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Target Start Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Dates",
+            "lineageTag": "19c6be40-0678-4d76-8e19-4cec6dc5ee8d",
+            "sourceColumn": "Target Start Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Target End Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Dates",
+            "lineageTag": "ce1942f1-2f4b-46cd-b5ad-710b8d6eff19",
+            "sourceColumn": "Target End Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Program Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "022e60ad-282c-4ec8-8bc4-e58f3b92693b",
+            "sourceColumn": "Program Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Sponsor Approval",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "People",
+            "lineageTag": "8853bdf4-28e8-4d4c-80ef-f010b5c95032",
+            "sourceColumn": "Project Sponsor Approval",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Person Submitting Form",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "People",
+            "lineageTag": "28e4c340-9187-43f0-b80d-09c0d5aeec0a",
+            "sourceColumn": "Person Submitting Form",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Start Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isDateTimeCustom\":true}"
+              }
+            ],
+            "dataType": "dateTime",
+            "displayFolder": "Dates",
+            "formatString": "yyyy-mm-dd",
+            "lineageTag": "4a3f0329-c7f6-43ef-9184-3fae5ec663a5",
+            "sourceColumn": "Start Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "End Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isDateTimeCustom\":true}"
+              }
+            ],
+            "dataType": "dateTime",
+            "displayFolder": "Dates",
+            "formatString": "yyyy-mm-dd",
+            "lineageTag": "d1e152ba-01a7-4dbb-adc0-419c5d69ae2a",
+            "sourceColumn": "End Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Dashboard Link",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "d1cb2f94-d87a-46ca-8f4d-c7768ef6b1e5",
+            "sourceColumn": "Dashboard Link",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Submitter",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "People",
+            "lineageTag": "51e834fc-9707-45f6-9ccb-7f53220bcdb3",
+            "sourceColumn": "Submitter",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Submission Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "dateTime",
+            "displayFolder": "Dates",
+            "formatString": "General Date",
+            "lineageTag": "295bb779-6a8e-478e-9a05-04b7770ed92d",
+            "sourceColumn": "Submission Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Days since Submission",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataType": "int64",
+            "displayFolder": "Dates",
+            "formatString": "0",
+            "lineageTag": "aeb40a79-bdf4-445a-a2fc-84ed8d06d382",
+            "sourceColumn": "Days since Submission",
+            "summarizeBy": "average"
+          }
+        ],
+        "lineageTag": "602dffd9-c9ca-4384-830d-883716832c4b",
+        "partitions": [
+          {
+            "name": "Intake Sheet",
+            "mode": "import",
+            "queryGroup": "01 Load\\01.02 Staging",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Levels,",
+                "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([Name] = \"Project Intake Sheet\")),",
+                "    #\"Only data\" = #\"Filtered Rows\"[Data],",
+                "    #\"Converted to Table\" = Table.FromList(#\"Only data\", Splitter.SplitByNothing(), null, null, ExtraValues.Error),",
+                "    #\"Expanded Column1\" = Table.ExpandTableColumn(#\"Converted to Table\", \"Column1\", {\"Project ID\", \"Project Name\", \"Target Start Date\", \"Target End Date\", \"Program Name\", \"Project Sponsor Approval\", \"Person Submitting Form\", \"Start Date\", \"End Date\", \"Dashboard Link\", \"Submitter\", \"Submission Date\"}, {\"Project ID\", \"Project Name\", \"Target Start Date\", \"Target End Date\", \"Program Name\", \"Project Sponsor Approval\", \"Person Submitting Form\", \"Start Date\", \"End Date\", \"Dashboard Link\", \"Submitter\", \"Submission Date\"}),",
+                "    // Top row repeats the column headers",
+                "    #\"Removed Top Row\" = Table.Skip(#\"Expanded Column1\",1),",
+                "    #\"Filtered Rows1\" = Table.SelectRows(#\"Removed Top Row\", each [Project ID] <> null and [Project ID] <> \"\"),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Filtered Rows1\",{{\"Submission Date\", type datetimezone}, {\"Start Date\", type date}, {\"End Date\", type date}}),",
+                "    #\"Added Days since submitted\" = Table.AddColumn(#\"Changed Type\", \"Days since Submission\", each Duration.Days(DateTime.LocalNow() - DateTime.From([Submission Date]))),",
+                "    #\"Changed Type1\" = Table.TransformColumnTypes(#\"Added Days since submitted\",{{\"Days since Submission\", Int64.Type}})",
+                "in",
+                "    #\"Changed Type1\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Portfolio Metrics",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "RowNumber",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "599d0a32-816f-4fcf-9f35-a814d0115d22",
+            "sourceColumn": "RowNumber",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Label",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "5cf15e0d-a215-4be8-a57f-0e466a512874",
+            "sourceColumn": "Label",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Total",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "442da544-595e-4385-bcaa-561a6d474364",
+            "sourceColumn": "Total",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "BAU",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "341ad933-78c7-44bb-90c6-e5435b733bcc",
+            "sourceColumn": "BAU",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Small",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "d265b51a-d219-4cd6-ad8d-dbf207d15ede",
+            "sourceColumn": "Small",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Medium",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "f9f696c0-d9b7-4ed7-a364-8bb2a0a11e23",
+            "sourceColumn": "Medium",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Large",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "3e613f36-cf15-452b-a7ac-3e2e42497cbf",
+            "sourceColumn": "Large",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Name.1",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "7919b20a-a735-492f-bd2c-64e959c618f3",
+            "sourceColumn": "Name.1",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Key.1",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "1ed5294a-fa4a-47b3-b0d4-316b4cae2781",
+            "sourceColumn": "Key.1",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "3769cbe9-29ac-47ec-85f1-2a1f60235e40",
+        "partitions": [
+          {
+            "name": "Portfolio Metrics",
+            "mode": "import",
+            "queryGroup": "01 Load\\01.04 Reports",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Reports,",
+                "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([ItemKind] = \"Table\")),",
+                "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered Rows\",{\"Name.1\", \"Key.1\", \"Data.1\"}),",
+                "    #\"Expanded Data.Data\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data.1\", {\"RowNumber\", \"Label\", \"Total\", \"BAU\", \"Small\", \"Medium\", \"Large\"}, {\"RowNumber\", \"Label\", \"Total\", \"BAU\", \"Small\", \"Medium\", \"Large\"}),",
+                "    // Contains headings again",
+                "    #\"Removed Top Row\" = Table.Skip(#\"Expanded Data.Data\",1)",
+                "in",
+                "    #\"Removed Top Row\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Overdue",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Project name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "fdcb5505-d1dc-404a-94ee-ffe885881d18",
+            "sourceColumn": "Project name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "d69a95a2-fa38-4000-b27f-f2732989acc5",
+            "sourceColumn": "Project Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Object Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "1991de63-8842-46f9-a300-985bf16e919f",
+            "sourceColumn": "Object Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "RowNumber",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "bf419cf1-5f01-4264-bf93-b78452602608",
+            "sourceColumn": "RowNumber",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Sheet Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "2924fc61-3ed1-4880-ae78-36f21a9c8346",
+            "sourceColumn": "Sheet Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Task Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "52249daf-9afe-4b24-abef-67a00a4749b8",
+            "sourceColumn": "Task Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Update",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "95b0222f-afbf-4790-8edb-141157c81f7e",
+            "sourceColumn": "Update",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Status",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "39aea252-938a-46e2-bb1b-393d37d6231f",
+            "sourceColumn": "Status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Assigned To",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "ac70892a-2a1d-492f-9cb1-2523449809b5",
+            "sourceColumn": "Assigned To",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Start Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "0c7df1e7-a0b9-4ea1-99ab-aa0783f3c6d7",
+            "sourceColumn": "Start Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "End Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "b0846c51-98bb-406a-8dfc-0ed7dc9a3bfd",
+            "sourceColumn": "End Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "% Complete",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "ca219aa2-e795-45f5-86d0-f4b5c5fe99a8",
+            "sourceColumn": "% Complete",
+            "summarizeBy": "none"
+          }
+        ],
+        "description": "Is subset of Schedule Tb",
+        "lineageTag": "eacdf5e1-3924-4521-8087-c44a954754b3",
+        "partitions": [
+          {
+            "name": "Overdue",
+            "mode": "import",
+            "queryGroup": "03 Projects\\03.02 Views",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Views,",
+                "    #\"Filtered Rows\" = Table.SelectRows(Source, each Text.Contains([Object name], \"Overdue\")),",
+                "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered Rows\",{\"Project name\", \"Project Key\", \"Object Key\", \"Data.1\"}),",
+                "    #\"Expanded Data.1\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data.1\", {\"RowNumber\", \"Sheet Name\", \"Task Name\", \"Update\", \"Status\", \"Assigned To\", \"Start Date\", \"End Date\", \"% Complete\"}, {\"RowNumber\", \"Sheet Name\", \"Task Name\", \"Update\", \"Status\", \"Assigned To\", \"Start Date\", \"End Date\", \"% Complete\"})",
+                "in",
+                "    #\"Expanded Data.1\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Schedule Report",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "changedProperties": [
+          {
+            "property": "IsHidden"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Project name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "54dac565-df77-47b4-bb68-894b7b373257",
+            "sourceColumn": "Project name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "066402ac-6be2-4791-a6ea-9237888e3f89",
+            "sourceColumn": "Project Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Object name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "b65d3013-5a9e-4e49-9335-35e487cba496",
+            "sourceColumn": "Object name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Object Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "00bfe2f0-4d99-463b-b364-3b42af6e36a4",
+            "sourceColumn": "Object Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "RowNumber",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "372ae429-bf73-418d-b579-124ffb979d3e",
+            "sourceColumn": "RowNumber",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Schedule Health",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "432b0eb1-34f7-45a8-bdb8-514dbd373226",
+            "sourceColumn": "Schedule Health",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Primary",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "6a55c551-6388-42ac-8d9e-c5920085a278",
+            "sourceColumn": "Primary",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Status",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "6e598104-f4bf-4ac5-ad6a-f4456711d60c",
+            "sourceColumn": "Status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "% Complete",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "84968a8c-a945-45f5-8a36-811c88e93ccd",
+            "sourceColumn": "% Complete",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Start Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "General Date",
+            "isHidden": true,
+            "lineageTag": "8df77625-faac-4bde-9728-a844f69a4117",
+            "sourceColumn": "Start Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "End Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "General Date",
+            "isHidden": true,
+            "lineageTag": "89bbf7a5-d06f-48c6-a510-2109b04e690f",
+            "sourceColumn": "End Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Sheet Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "0bc6a3e6-d7a4-4768-92df-1b447c6a27c0",
+            "sourceColumn": "Sheet Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Task Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "30f08492-01c2-4697-be6c-8c7184da27b6",
+            "sourceColumn": "Task Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Update",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "698f1baa-93d2-4038-afa5-89852f63f214",
+            "sourceColumn": "Update",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Target Start Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "isHidden": true,
+            "lineageTag": "7bed20bb-fa0a-4b2e-aede-5ebd6460ec17",
+            "sourceColumn": "Target Start Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Target End Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "isHidden": true,
+            "lineageTag": "99c2a035-849d-44e6-950d-30642c0b1ca6",
+            "sourceColumn": "Target End Date",
+            "summarizeBy": "none"
+          }
+        ],
+        "isHidden": true,
+        "lineageTag": "0ff5ce66-83e8-4bfe-ba26-daf2e5b25498",
+        "partitions": [
+          {
+            "name": "Schedule Report",
+            "mode": "import",
+            "queryGroup": "03 Projects\\03.02 Views",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Views,",
+                "    #\"Filtered Rows\" = Table.SelectRows(Source, each Text.Contains([Object name], \"Schedule\")),",
+                "    #\"Expanded Data.1\" = Table.ExpandTableColumn(#\"Filtered Rows\", \"Data.1\", {\"RowNumber\", \"Schedule Health\", \"Primary\", \"Status\", \"% Complete\", \"Start Date\", \"End Date\", \"Sheet Name\", \"Task Name\", \"Update\", \"Target Start Date\", \"Target End Date\"}, {\"RowNumber\", \"Schedule Health\", \"Primary\", \"Status\", \"% Complete\", \"Start Date\", \"End Date\", \"Sheet Name\", \"Task Name\", \"Update\", \"Target Start Date\", \"Target End Date\"}),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Expanded Data.1\",{{\"Start Date\", type datetimezone}, {\"End Date\", type datetimezone}, {\"Target Start Date\", type date}, {\"Target End Date\", type date}})",
+                "in",
+                "    #\"Changed Type\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Milestones",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Exception"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Project name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "1e345eea-ade2-4d01-bdeb-739a0c35bc30",
+            "sourceColumn": "Project name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "b44fddd3-55fe-479b-9884-d71b612a7256",
+            "sourceColumn": "Project Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Object Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "4fef59b9-ff76-4cee-926a-be989df44353",
+            "sourceColumn": "Object Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "RowNumber",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "0dcdcdab-aa90-4d9a-9024-2a450b29d6ae",
+            "sourceColumn": "RowNumber",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Sheet Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "a3ac6d03-d337-4618-83ef-9088024b064c",
+            "sourceColumn": "Sheet Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Status",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Item",
+            "lineageTag": "35027a99-db07-4b96-aed7-9a8f7b96f0e0",
+            "sourceColumn": "Status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Update",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Item",
+            "lineageTag": "fad76ef8-b4ad-428d-acdb-d387bf600980",
+            "sourceColumn": "Update",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Start Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "dateTime",
+            "displayFolder": "Dates",
+            "formatString": "General Date",
+            "lineageTag": "f0f3506f-71a2-4002-b1c5-e32ff5e43dbf",
+            "sourceColumn": "Start Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "End Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "dateTime",
+            "displayFolder": "Dates",
+            "formatString": "General Date",
+            "lineageTag": "e6404cf9-51e5-49ca-acce-6cd0c6b88c09",
+            "sourceColumn": "End Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "% Complete",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Item",
+            "formatString": "0%;-0%;0%",
+            "lineageTag": "d1d7f584-61d5-4c77-871e-f4f6d3f313ed",
+            "sourceColumn": "% Complete",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Schedule Health",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Item",
+            "lineageTag": "0070be88-c979-46e1-98d4-1a0c9f73df29",
+            "sourceColumn": "Schedule Health",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "MS",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "1fff724f-2206-47ea-8f1e-10f3fc6d01a7",
+            "sourceColumn": "MS",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Milestone",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Item",
+            "lineageTag": "7914bfb6-90e9-4c1a-8164-7c1b72c9ba1b",
+            "sourceColumn": "Milestone",
+            "summarizeBy": "none"
+          }
+        ],
+        "description": "Is subset of Schedule Tb",
+        "lineageTag": "7bb3f06c-cb66-4505-b7ec-32d53548c45c",
+        "partitions": [
+          {
+            "name": "Milestones",
+            "mode": "import",
+            "queryGroup": "03 Projects\\03.02 Views",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Views,",
+                "    #\"Filtered Rows\" = Table.SelectRows(Source, each (Text.Contains([Object name], \"Milestone\"))),",
+                "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered Rows\",{\"Project name\", \"Project Key\", \"Object Key\", \"Data.1\"}),",
+                "    #\"Expanded Milestones\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data.1\", {\"RowNumber\", \"MS\", \"Sheet Name\", \"Task Name\", \"Status\", \"Update\", \"Start Date\", \"End Date\", \"% Complete\", \"Schedule Health\"}, {\"RowNumber\", \"MS\", \"Sheet Name\", \"Milestone\", \"Status\", \"Update\", \"Start Date\", \"End Date\", \"% Complete\", \"Schedule Health\"}),",
+                "    // want to only select non-parent rows",
+                "    #\"Filtered only Rows containing \"\"Milestone\"\"\" = Table.SelectRows(#\"Expanded Milestones\", each Text.Contains(Text.Lower([Milestone]), \"milestone\")),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Filtered only Rows containing \"\"Milestone\"\"\",{{\"Start Date\", type datetimezone}, {\"End Date\", type datetimezone}, {\"% Complete\", Percentage.Type}})",
+                "in",
+                "    #\"Changed Type\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Decision Log",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Project name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "c0e4436a-10ff-4f05-902a-1477bdc58473",
+            "sourceColumn": "Project name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "fb277a6f-7a84-47d1-a83a-e436a60b8fb6",
+            "sourceColumn": "Project Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Object Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "cb83017a-cfbf-49ab-8af7-8c1fcd41334d",
+            "sourceColumn": "Object Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Decision ID",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "368c8bbb-695a-455f-8989-06752164eec0",
+            "sourceColumn": "Decision ID",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Decision Owner",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About",
+            "lineageTag": "6fd450f3-aa0c-4e46-a51a-8d2fe4ffaa13",
+            "sourceColumn": "Decision Owner",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Decision Title",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About",
+            "lineageTag": "ff2639ae-6c12-4f12-acf0-72cb2a87b616",
+            "sourceColumn": "Decision Title",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Created Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isDateTimeCustom\":true}"
+              }
+            ],
+            "dataType": "dateTime",
+            "displayFolder": "Dates",
+            "formatString": "yyyy-mm-dd",
+            "lineageTag": "bc653c6c-7c5d-4cce-bde5-89ac96808960",
+            "sourceColumn": "Created Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Due Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isDateTimeCustom\":true}"
+              }
+            ],
+            "dataType": "dateTime",
+            "displayFolder": "Dates",
+            "formatString": "yyyy-mm-dd",
+            "lineageTag": "661a6cf5-a5bf-4882-8542-78cc856a8f7a",
+            "sourceColumn": "Due Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Decision Description",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About",
+            "lineageTag": "ea4d56b0-cfd7-401b-8b98-d7fc22e6cccd",
+            "sourceColumn": "Decision Description",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Status",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About",
+            "lineageTag": "7814d987-95a9-4d7b-8a6a-a358a66f9999",
+            "sourceColumn": "Status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Comments",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "meta",
+            "lineageTag": "c1952612-2dd3-4046-aed1-940ded67caa0",
+            "sourceColumn": "Comments",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Related documents / risks / issues",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "meta",
+            "lineageTag": "eee536d6-25a2-4226-be4f-1c1b50defe8c",
+            "sourceColumn": "Related documents / risks / issues",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Modified By",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "meta",
+            "lineageTag": "32693fc4-9933-4375-bb7b-29656766b63d",
+            "sourceColumn": "Modified By",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "d4061466-6e34-4745-bea7-c2f53cc59cdf",
+        "partitions": [
+          {
+            "name": "Decision Log",
+            "mode": "import",
+            "queryGroup": "03 Projects\\03.03 Tables",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Tables,",
+                "    #\"Filtered to decision logs\" = Table.SelectRows(Source, each Text.Contains([Object name], \"Decision\")),",
+                "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered to decision logs\",{\"Project name\", \"Project Key\", \"Object Key\", \"Data.1\"}),",
+                "    #\"Expanded Data.1\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data.1\", {\"Decision ID\", \"Decision Owner\", \"Decision Title\", \"Created Date\", \"Due Date\", \"Decision Description\", \"Status\", \"Comments\", \"Related documents / risks / issues\", \"Modified By\"}, {\"Decision ID\", \"Decision Owner\", \"Decision Title\", \"Created Date\", \"Due Date\", \"Decision Description\", \"Status\", \"Comments\", \"Related documents / risks / issues\", \"Modified By\"}),",
+                "    #\"Changed to Date\" = Table.TransformColumnTypes(#\"Expanded Data.1\",{{\"Created Date\", type date}, {\"Due Date\", type date}}),",
+                "    // not == \"test\"",
+                "    #\"Filtered not placeholder text\" = Table.SelectRows(#\"Changed to Date\", each not ((Text.Lower([Decision Title]) = \"test\") or [Decision ID] = null))",
+                "in",
+                "    #\"Filtered not placeholder text\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Schedule Table",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Project name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "c96086bc-96d2-459b-91cb-275de86d8edd",
+            "sourceColumn": "Project name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "4431013c-41d5-43ac-a520-e0c372a926ea",
+            "sourceColumn": "Project Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Object Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "6304c5ae-5735-4a2a-916c-bae0e36affc5",
+            "sourceColumn": "Object Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "MS",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "cd6f3190-d022-417e-9392-c0724f1b976b",
+            "sourceColumn": "MS",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Schedule Health",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Status",
+            "lineageTag": "b657a435-d3bd-4f7a-a891-5028d7683883",
+            "sourceColumn": "Schedule Health",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Task Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "b2191b76-e407-4cd4-a977-6a0b8d02561f",
+            "sourceColumn": "Task Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Update",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Status",
+            "lineageTag": "8054844b-6e74-4afe-944d-b0650c07b805",
+            "sourceColumn": "Update",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Status",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Status",
+            "lineageTag": "5c83d57c-2598-498c-85b5-9d670799b233",
+            "sourceColumn": "Status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Assigned To",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "People",
+            "lineageTag": "7a29247d-e083-463c-86e9-713b11eedab5",
+            "sourceColumn": "Assigned To",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Start Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "dateTime",
+            "displayFolder": "Dates",
+            "formatString": "General Date",
+            "lineageTag": "6456068c-ae2a-4cd5-923b-bd7184634194",
+            "sourceColumn": "Start Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "End Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "dateTime",
+            "displayFolder": "Dates",
+            "formatString": "General Date",
+            "lineageTag": "05c9f0b2-b777-4b10-90ac-b74f0a51948f",
+            "sourceColumn": "End Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "% Complete",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Status",
+            "formatString": "0%;-0%;0%",
+            "lineageTag": "44f14c3e-e5d0-4de1-91d2-edc7602062f0",
+            "sourceColumn": "% Complete",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Duration",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataType": "int64",
+            "displayFolder": "Dates",
+            "formatString": "0",
+            "lineageTag": "8b3da4e6-f8cc-42e9-be9b-cdd896c388b3",
+            "sourceColumn": "Duration",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Predecessors",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "description": "is NOT parent row",
+            "lineageTag": "6eeeff27-da66-4a88-a37b-fe0c9f52ab49",
+            "sourceColumn": "Predecessors",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Target Start Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isDateTimeCustom\":true}"
+              }
+            ],
+            "dataType": "dateTime",
+            "displayFolder": "Dates",
+            "formatString": "yyyy-mm-dd",
+            "lineageTag": "5d29d318-0543-42ac-8835-7270a9ef5b41",
+            "sourceColumn": "Target Start Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Target End Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isDateTimeCustom\":true}"
+              }
+            ],
+            "dataType": "dateTime",
+            "displayFolder": "Dates",
+            "formatString": "yyyy-mm-dd",
+            "lineageTag": "27ab7293-94a5-4f31-b7d6-4f39469e743e",
+            "sourceColumn": "Target End Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Budget",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Spend",
+            "lineageTag": "30b2f5b9-6c91-49ff-93c1-c2d2013361de",
+            "sourceColumn": "Budget",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Cost",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Spend",
+            "lineageTag": "ce7582eb-85d8-4544-a554-4c607c8f55f1",
+            "sourceColumn": "Cost",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Current Spend",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Spend",
+            "lineageTag": "211bb913-4e0b-4168-86f8-7c2a0168ec28",
+            "sourceColumn": "Current Spend",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Difference of Current Spend & Budget",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Spend",
+            "lineageTag": "7fd8bb86-f381-48db-b86d-9ecef8ead811",
+            "sourceColumn": "Difference of Current Spend & Budget",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Schedule Delta (%)",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Dates",
+            "lineageTag": "67b7b3ed-aaf0-4e70-bcb5-ee3e092113df",
+            "sourceColumn": "Schedule Delta (%)",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Schedule Delta (Working Days)",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataType": "int64",
+            "displayFolder": "Dates",
+            "formatString": "0",
+            "lineageTag": "9b1a3c02-eb1e-4042-aa80-6f13ef6852da",
+            "sourceColumn": "Schedule Delta (Working Days)",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "RowNumber",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "6f2b741c-cb92-4f07-8ee7-f473babef94a",
+            "sourceColumn": "RowNumber",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "d0a24303-9ddc-4e1f-9ab3-e441f4e74637",
+        "partitions": [
+          {
+            "name": "Schedule Table",
+            "mode": "import",
+            "queryGroup": "03 Projects\\03.03 Tables\\03.03.01 Schedule",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Tables,",
+                "    #\"Filtered Rows\" = Table.SelectRows(Source, each Text.Contains([Object name], \"Schedule\")),",
+                "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered Rows\",{\"Project name\", \"Project Key\", \"Object Key\", \"Data.1\"}),",
+                "    #\"Expanded Data.1\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data.1\", {\"RowNumber\", \"MS\", \"Schedule Health\", \"Task Name\", \"Update\", \"Status\", \"Assigned To\", \"Start Date\", \"End Date\", \"% Complete\", \"Duration\", \"Predecessors\", \"Target Start Date\", \"Target End Date\", \"Budget\", \"Cost\", \"Current Spend\", \"Difference of Current Spend & Budget\", \"Schedule Delta (%)\", \"Schedule Delta (Working Days)\"}, {\"RowNumber\", \"MS\", \"Schedule Health\", \"Task Name\", \"Update\", \"Status\", \"Assigned To\", \"Start Date\", \"End Date\", \"% Complete\", \"Duration\", \"Predecessors\", \"Target Start Date\", \"Target End Date\", \"Budget\", \"Cost\", \"Current Spend\", \"Difference of Current Spend & Budget\", \"Schedule Delta (%)\", \"Schedule Delta (Working Days)\"}),",
+                "    #\"Extracted Text Before Delimiter\" = Table.TransformColumns(#\"Expanded Data.1\", {{\"Duration\", each Text.BeforeDelimiter(_, \"d\"), type text}}),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Extracted Text Before Delimiter\",{{\"Start Date\", type datetimezone}, {\"End Date\", type datetimezone}, {\"% Complete\", Percentage.Type}, {\"Duration\", Int64.Type}, {\"Target Start Date\", type date}, {\"Target End Date\", type date}, {\"Schedule Delta (Working Days)\", Int64.Type}}),",
+                "    // Temporary step before JBurgess or myself do some string validation here",
+                "    #\"Removed Errors1\" = Table.RemoveRowsWithErrors(#\"Changed Type\", {\"Project name\", \"Project Key\", \"Object Key\", \"MS\", \"Schedule Health\", \"Task Name\", \"Update\", \"Status\", \"Assigned To\", \"Start Date\", \"End Date\", \"% Complete\", \"Duration\", \"Predecessors\", \"Target Start Date\", \"Target End Date\", \"Budget\", \"Cost\", \"Current Spend\", \"Difference of Current Spend & Budget\", \"Schedule Delta (%)\", \"Schedule Delta (Working Days)\"}),",
+                "    #\"Filtered out rows w/ no content\" = Table.SelectRows(#\"Removed Errors1\", each ([Task Name] <> null))",
+                "in",
+                "    #\"Filtered out rows w/ no content\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Risk Register",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Project name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "11cbb53d-4faf-4fef-9531-08d217293a82",
+            "sourceColumn": "Project name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "1c936596-b3c6-4702-b583-46fb8ec7f529",
+            "sourceColumn": "Project Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Object Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "12ee6d6d-9767-4d5a-be00-12847869f837",
+            "sourceColumn": "Object Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Risk / Issue ID",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About Risk",
+            "lineageTag": "0818011f-84eb-4bc0-95d6-4c093b26db3d",
+            "sourceColumn": "Risk / Issue ID",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Area",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About Risk",
+            "lineageTag": "ddced68a-fbca-4d40-9525-37b29025ff70",
+            "sourceColumn": "Area",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Status",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About Risk",
+            "lineageTag": "aabf0583-20da-4fe8-9c8f-f3c0be753842",
+            "sourceColumn": "Status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Risk or Issue Detail",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About Risk",
+            "lineageTag": "2a796590-d6cf-4566-b99e-7d772a855e79",
+            "sourceColumn": "Risk or Issue Detail",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Assigned To",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "People",
+            "lineageTag": "9a24eb7d-0e71-45f7-8ccb-5c3362faa4e3",
+            "sourceColumn": "Assigned To",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Status Update",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About Risk",
+            "lineageTag": "8e778aef-5f24-4fbb-90bd-9b3b70a75971",
+            "sourceColumn": "Status Update",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Impact",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About Risk",
+            "lineageTag": "a941b4bb-f10d-44b6-8fc0-da5fa2c9a6c6",
+            "sourceColumn": "Impact",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Actual Likelihood",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About Risk",
+            "lineageTag": "83b01b2c-d435-4f73-af5f-f28cdbd6c94d",
+            "sourceColumn": "Actual Likelihood",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Actual Consequence",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About Risk",
+            "lineageTag": "cde7f1ea-ca23-4945-ad94-07665d0c6048",
+            "sourceColumn": "Actual Consequence",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Actual Rating",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About Risk",
+            "lineageTag": "4ee9fa61-de12-4774-9eb2-3543ab3c64ce",
+            "sourceColumn": "Actual Rating",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Mitigation",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About Risk",
+            "lineageTag": "94277232-ad85-4eaf-81ef-0804126e3909",
+            "sourceColumn": "Mitigation",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "ALNo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Metrics",
+            "lineageTag": "652d3348-32a9-4359-918d-35e345993746",
+            "sourceColumn": "ALNo",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "ACNo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Metrics",
+            "lineageTag": "d3449bf9-519b-403e-8cf0-fe4d86db61d0",
+            "sourceColumn": "ACNo",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "AR",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Metrics",
+            "lineageTag": "0ebbabe9-864f-447b-999d-5be6574187a5",
+            "sourceColumn": "AR",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Contingency",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About Risk",
+            "lineageTag": "7e075b2b-dc25-4e38-9058-626b9f116042",
+            "sourceColumn": "Contingency",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Stream",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About Risk",
+            "lineageTag": "c76b4410-4c65-474a-baa0-e34d782d92af",
+            "sourceColumn": "Stream",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Residual Likelihood",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About Risk",
+            "lineageTag": "c0b0f363-7cb2-407a-a36d-fd3567cb8d73",
+            "sourceColumn": "Residual Likelihood",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Residual Consequence",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About Risk",
+            "lineageTag": "b3732c55-0caf-4b8e-8e5e-510e8594093e",
+            "sourceColumn": "Residual Consequence",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "RLNo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Metrics",
+            "lineageTag": "0f7e3644-e387-4c58-b393-0a318d6446a8",
+            "sourceColumn": "RLNo",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "RCNo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Metrics",
+            "lineageTag": "9a7575cf-ca2a-4bce-8eab-37d2cc6b6d51",
+            "sourceColumn": "RCNo",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "RR",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Metrics",
+            "lineageTag": "9c090590-68ad-44bf-a0fd-b367d09c3a41",
+            "sourceColumn": "RR",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Residual Rating",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About Risk",
+            "lineageTag": "791b0a05-0a8b-4d9a-b9b7-4533c0723109",
+            "sourceColumn": "Residual Rating",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Date Created",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isDateTimeCustom\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "DataType"
+              }
+            ],
+            "dataType": "dateTime",
+            "displayFolder": "People",
+            "formatString": "yyyy-mm-dd",
+            "lineageTag": "29f87284-8bce-4907-b34d-a349bf9f2b5f",
+            "sourceColumn": "Date Created",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Modified",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "dateTime",
+            "displayFolder": "Dates",
+            "formatString": "General Date",
+            "lineageTag": "cc32a8d1-5efd-401a-8ef2-332f7e79d2b4",
+            "sourceColumn": "Modified",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Modified By",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "People",
+            "lineageTag": "0546dd1b-9ad1-4f6d-a2b4-c0e1494b29e3",
+            "sourceColumn": "Modified By",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Program",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "bfad3730-f0e5-477c-a72e-0f2e77e9ac3e",
+            "sourceColumn": "Program",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Portfolio",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "73009250-9a61-4184-b65d-7edcab9caf3d",
+            "sourceColumn": "Portfolio",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Mitigation in Place",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "boolean",
+            "displayFolder": "About Risk",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "5a4c2b34-fb1f-4ee7-a840-3daed85ff744",
+            "sourceColumn": "Mitigation in Place",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Item Type",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "About Risk",
+            "lineageTag": "b5e814e8-59a0-48c7-825e-acb440d59388",
+            "sourceColumn": "Item Type",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "7bcb1ec8-3476-4c99-89c0-16dc162793c2",
+        "partitions": [
+          {
+            "name": "Risk Register",
+            "mode": "import",
+            "queryGroup": "03 Projects\\03.03 Tables",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Tables,",
+                "    #\"Filtered is Risk\" = Table.SelectRows(Source, each Text.Contains([Object name], \"Risk\")),",
+                "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered is Risk\",{\"Project name\", \"Project Key\", \"Object Key\", \"Data.1\"}),",
+                "    #\"Expanded Risk Register\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data.1\", {\"Risk / Issue ID\", \"Area\", \"Risk Issue\", \"Status\", \"Risk or Issue Detail\", \"Assigned To\", \"Status Update\", \"Impact\", \"Actual Likelihood\", \"Actual Consequence\", \"Actual Rating\", \"Mitigation\", \"ALNo\", \"ACNo\", \"AR\", \"Contingency\", \"Stream\", \"Residual Likelihood\", \"Residual Consequence\", \"RLNo\", \"RCNo\", \"RR\", \"Residual Rating\", \"Date Created\", \"Modified\", \"Modified By\", \"Program\", \"Portfolio\"}, {\"Risk / Issue ID\", \"Area\", \"Item Type\", \"Status\", \"Risk or Issue Detail\", \"Assigned To\", \"Status Update\", \"Impact\", \"Actual Likelihood\", \"Actual Consequence\", \"Actual Rating\", \"Mitigation\", \"ALNo\", \"ACNo\", \"AR\", \"Contingency\", \"Stream\", \"Residual Likelihood\", \"Residual Consequence\", \"RLNo\", \"RCNo\", \"RR\", \"Residual Rating\", \"Date Created\", \"Modified\", \"Modified By\", \"Program\", \"Portfolio\"}),",
+                "    #\"Changed to datetimezone\" = Table.TransformColumnTypes(#\"Expanded Risk Register\",{{\"Modified\", type datetimezone}}),",
+                "    #\"Filtered area not blank\" = Table.SelectRows(#\"Changed to datetimezone\", each [Area] <> null and [Area] <> \"\"),",
+                "    // not blank, not null, not placeholder text",
+                "    #\"Added Mitigation in place\" = Table.AddColumn(#\"Filtered area not blank\", \"Mitigation in Place\", each [Mitigation] <> null and [Mitigation] <> \"\" and not(Text.Contains([Mitigation], \"xx\")), type logical)",
+                "in",
+                "    #\"Added Mitigation in place\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Lessons Learned",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Exception"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Project name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "a9b4748d-828d-4190-8a85-93d9023a0473",
+            "sourceColumn": "Project name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "c98c7901-03ab-41c2-a926-42329f050539",
+            "sourceColumn": "Project Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Object Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "4a6f86be-9dde-4266-b2be-5c4c9883e882",
+            "sourceColumn": "Object Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Key Lessons",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Meta",
+            "lineageTag": "8beff27d-5f61-4e44-9865-8a6b2370f5f5",
+            "sourceColumn": "Key Lessons",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project stage",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Meta",
+            "lineageTag": "1660787d-507d-4349-8d5e-55e324803b29",
+            "sourceColumn": "Project stage",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Key Recommendations/ Tips for the future",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Details",
+            "lineageTag": "11d0d234-5ea9-4534-a2aa-b52219cb0d1f",
+            "sourceColumn": "Key Recommendations/ Tips for the future",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Any other feedback",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Meta",
+            "lineageTag": "dafa03c1-365c-4bdd-96fe-4547f14bb4a8",
+            "sourceColumn": "Any other feedback",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Name of Project team member",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "People",
+            "lineageTag": "c33ddd3d-e6e7-4cde-aca8-f572187d3780",
+            "sourceColumn": "Name of Project team member",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Modified",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "dateTime",
+            "displayFolder": "Dates",
+            "formatString": "General Date",
+            "lineageTag": "dcd12fd0-0b39-425c-ada8-c445699312cd",
+            "sourceColumn": "Modified",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Modified By",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "People",
+            "lineageTag": "5f6c6328-9f26-4cac-856f-6763f911d474",
+            "sourceColumn": "Modified By",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "32aca6ac-0452-4092-9ebe-ac4d5ac50a3b",
+        "partitions": [
+          {
+            "name": "Lessons Learned",
+            "mode": "import",
+            "queryGroup": "03 Projects\\03.03 Tables",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Tables,",
+                "    #\"Filtered only Lessons Learnt\" = Table.SelectRows(Source, each Text.Contains([Object name], \"Lessons Learned\")),",
+                "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered only Lessons Learnt\",{\"Project name\", \"Project Key\", \"Object Key\", \"Data.1\"}),",
+                "    #\"Expanded Lessons Learnt\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data.1\", {\"Key Lessons\", \"Project stage\", \"Key Recommendations/ Tips for the future\", \"Any other feedback\", \"Name of Project team member\", \"Modified\", \"Modified By\"}, {\"Key Lessons\", \"Project stage\", \"Key Recommendations/ Tips for the future\", \"Any other feedback\", \"Name of Project team member\", \"Modified\", \"Modified By\"}),",
+                "    #\"Filtered lessons not null\" = Table.SelectRows(#\"Expanded Lessons Learnt\", each [Key Lessons] <> null and [Key Lessons] <> \"\"),",
+                "    #\"Changed to datetimezone\" = Table.TransformColumnTypes(#\"Filtered lessons not null\",{{\"Modified\", type datetimezone}})",
+                "in",
+                "    #\"Changed to datetimezone\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Projects",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Project name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "e24be312-7d27-49a6-8514-fe85d2a69786",
+            "sourceColumn": "Project name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "159a2842-2bab-485b-8d56-14bc242dd397",
+            "sourceColumn": "Project Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Short Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "bbdb638e-1da1-40ae-8080-41dd583721ba",
+            "sourceColumn": "Short Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project ID",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "f174af55-d75c-4010-90b9-4dcd8fe56adf",
+            "sourceColumn": "Project ID",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "% Complete",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataType": "double",
+            "displayFolder": "Summaries",
+            "formatString": "0%;-0%;0%",
+            "lineageTag": "9a836182-9a6f-4bc2-9e15-f3b3de3be307",
+            "sourceColumn": "% Complete",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Assigned To",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "People",
+            "lineageTag": "a071325c-8bc4-466c-a301-11d52e06c65c",
+            "sourceColumn": "Assigned To",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Update",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Summaries",
+            "lineageTag": "204c3b62-425f-490c-bc2d-e9405cb1348f",
+            "sourceColumn": "Update",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Duration",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataType": "int64",
+            "displayFolder": "Dates",
+            "formatString": "0",
+            "lineageTag": "50138b77-4375-4033-91a6-27d991db90e0",
+            "sourceColumn": "Duration",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "At Risk",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "boolean",
+            "displayFolder": "Summaries",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "941e525d-7022-4759-af8a-197d2972d443",
+            "sourceColumn": "At Risk",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Short Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "50b603fb-1f0f-4c63-98db-4fe24223560b",
+            "sourceColumn": "Project Short Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Category",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Summaries",
+            "lineageTag": "6e694c0c-c7eb-4dc2-8278-aeb518080b70",
+            "sourceColumn": "Project Category",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Manager",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "People",
+            "lineageTag": "6b222040-0171-44c7-a36f-8bd6da3bace0",
+            "sourceColumn": "Project Manager",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Sponsor",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "People",
+            "lineageTag": "e261bc78-99d0-4782-bcd5-c1889e97e2d0",
+            "sourceColumn": "Project Sponsor",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Owner",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "People",
+            "lineageTag": "f3040de7-1fcd-48d8-a997-8746f5d457af",
+            "sourceColumn": "Project Owner",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Start Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isDateTimeCustom\":true}"
+              }
+            ],
+            "dataType": "dateTime",
+            "displayFolder": "Dates",
+            "formatString": "yyyy-mm-dd",
+            "lineageTag": "04941b81-e950-4637-8375-555e397accad",
+            "sourceColumn": "Start Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "End Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isDateTimeCustom\":true}"
+              }
+            ],
+            "dataType": "dateTime",
+            "displayFolder": "Dates",
+            "formatString": "yyyy-mm-dd",
+            "lineageTag": "b85e64ff-4e95-4af5-ba9a-1d74f1bb0855",
+            "sourceColumn": "End Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Dashboard Link",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "IDs",
+            "lineageTag": "85287b3e-3f52-4255-b1df-6a0d1ac25d41",
+            "sourceColumn": "Project Dashboard Link",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Schedule At Risk",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Summaries",
+            "lineageTag": "04fe3bd7-1d60-4379-977a-f512b9993c02",
+            "sourceColumn": "Schedule At Risk",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Status",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Summaries",
+            "lineageTag": "eea3fb3f-72b0-4a96-bc5b-474d8f874085",
+            "sourceColumn": "Project Status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Target Undefined",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Dates",
+            "lineageTag": "62f9c07f-20b6-4865-b674-98dc003845d5",
+            "sourceColumn": "Target Undefined",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Target Start",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Dates",
+            "lineageTag": "83c4d312-3c0a-459a-b0a5-3d56f79750ff",
+            "sourceColumn": "Target Start",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Target End",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "displayFolder": "Dates",
+            "lineageTag": "e4e60b83-fc43-4775-9635-0ea5a57d8764",
+            "sourceColumn": "Target End",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "8f69403b-3491-4317-9313-55675e7fdd89",
+        "partitions": [
+          {
+            "name": "Projects",
+            "mode": "import",
+            "queryGroup": "03 Projects",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = #\"Projects Stg\",",
+                "    KeyColumns = Table.SelectColumns(Source, {\"Project name\", \"Project Key\"}),",
+                "    #\"Removed Duplicates\" = Table.Distinct(KeyColumns),",
+                "    #\"Added Index/ID\" = Table.AddColumn(#\"Removed Duplicates\", \"Project ID\", each Text.BeforeDelimiter([Project name], \" \")),",
+                "    #\"Added short name\" = Table.AddColumn(#\"Added Index/ID\", \"Short Name\", each Text.AfterDelimiter([Project name], \" \")),",
+                "    #\"Merged w/ project Status\" = Table.NestedJoin(#\"Added short name\", {\"Project Key\"}, #\"Project Status\", {\"Project Key\"}, \"Project Status\", JoinKind.LeftOuter),",
+                "    #\"Expanded Project Status\" = Table.ExpandTableColumn(#\"Merged w/ project Status\", \"Project Status\", {\"% Complete\", \"Assigned To\", \"Update\", \"Duration\"}, {\"% Complete\", \"Assigned To\", \"Update\", \"Duration\"}),",
+                "    #\"Merged w/ at risk\" = Table.NestedJoin(#\"Expanded Project Status\", {\"Short Name\"}, #\"At Risk\", {\"Project Name\"}, \"At Risk\", JoinKind.LeftOuter),",
+                "    #\"Expanded At Risk\" = Table.ExpandTableColumn(#\"Merged w/ at risk\", \"At Risk\", {\"At Risk\"}, {\"At Risk\"}),",
+                "    #\"Merged Queries\" = Table.NestedJoin(#\"Expanded At Risk\", {\"Project name\"}, Metadata, {\"Project name\"}, \"Metadata\", JoinKind.LeftOuter),",
+                "    #\"Expanded Metadata\" = Table.ExpandTableColumn(#\"Merged Queries\", \"Metadata\", {\"Project Short Name\", \"Project Category\", \"Project Manager\", \"Project Sponsor\", \"Project Owner\", \"Start Date\", \"End Date\", \"Project Dashboard Link\", \"Schedule At Risk\", \"Project Status\", \"Target Undefined\", \"Target Start\", \"Target End\"}, {\"Project Short Name\", \"Project Category\", \"Project Manager\", \"Project Sponsor\", \"Project Owner\", \"Start Date\", \"End Date\", \"Project Dashboard Link\", \"Schedule At Risk\", \"Project Status\", \"Target Undefined\", \"Target Start\", \"Target End\"})",
+                "in",
+                "    #\"Expanded Metadata\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Measures Table",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "lineageTag": "430348bf-7c67-4f9d-a2b1-a8d69ac301e7",
+        "measures": [
+          {
+            "name": "Projects",
+            "displayFolder": "Projects",
+            "expression": [
+              "CALCULATE(",
+              "    DISTINCTCOUNT(Projects[Project Key])",
+              "    , USERELATIONSHIP('Index Status'[Status], Projects[Project Status])",
+              "    , USERELATIONSHIP('Index Health'[Risk Grade], Projects[Schedule At Risk])",
+              ") // end calc"
+            ],
+            "formatString": "0",
+            "lineageTag": "22569a2f-11ae-499b-a17e-da73ba1eb292"
+          },
+          {
+            "name": "Schedule Items",
+            "displayFolder": "Schedule",
+            "expression": [
+              "CALCULATE(",
+              "    DISTINCTCOUNT('Schedule Table'[Task Name])",
+              "    , USERELATIONSHIP('Index Status'[Status], 'Schedule Table'[Status])",
+              "    , USERELATIONSHIP('Index Health'[Risk Grade], 'Schedule Table'[Schedule Health])",
+              ")"
+            ],
+            "formatString": "0",
+            "lineageTag": "2a07b509-7029-461c-a48a-31dd9c7497f7"
+          },
+          {
+            "name": "Active Projects",
+            "displayFolder": "Projects\\Actives",
+            "expression": [
+              "CALCULATE(",
+              "    [Projects]",
+              "    , Projects[Project Status] = \"In Progress\"",
+              ") // end calc"
+            ],
+            "formatString": "0",
+            "lineageTag": "7faf3211-6132-4c63-8b70-db6339f913d5"
+          },
+          {
+            "name": "Active Projects at Low Health",
+            "displayFolder": "Projects\\Actives",
+            "expression": [
+              "CALCULATE(",
+              "    [Active Projects]",
+              "    , Projects[Schedule At Risk] = \"Red\"",
+              ") // end calc"
+            ],
+            "formatString": "0",
+            "lineageTag": "e501f6eb-01a6-4f50-a166-c3f16b95e5c0"
+          },
+          {
+            "name": "Last Refreshed",
+            "displayFolder": "00 Utilities",
+            "expression": "FORMAT(NOW(), \"yyyy/mm/dd HH:mm\")",
+            "lineageTag": "25e9e2bb-8252-4b4f-b5dc-32351c9754ce"
+          },
+          {
+            "name": "Proposals",
+            "displayFolder": "Proposals",
+            "expression": [
+              "CALCULATE(",
+              "    [Projects]",
+              "    , Projects[Project Status] = \"Proposal\"",
+              "    , USERELATIONSHIP('Index Status'[Status], Projects[Project Status])",
+              "    , USERELATIONSHIP('Index Health'[Risk Grade], Projects[Schedule At Risk])",
+              ") // end calc"
+            ],
+            "formatString": "0",
+            "lineageTag": "2f1912f6-6be2-41f1-a05e-b72d020e98e3"
+          },
+          {
+            "name": "Completed Projects",
+            "displayFolder": "Projects",
+            "expression": [
+              "CALCULATE(",
+              "    [Projects]",
+              "    , Projects[Project Status] = \"Complete\"",
+              ") // end calc"
+            ],
+            "formatString": "0",
+            "lineageTag": "0793cb8c-a42d-4218-b61d-d6a51fe17092"
+          },
+          {
+            "name": "Active Projects at Risk",
+            "displayFolder": "Projects\\Actives",
+            "expression": [
+              "CALCULATE(",
+              "    [Active Projects]",
+              "    , Projects[At Risk] = TRUE",
+              ") // end calc"
+            ],
+            "formatString": "0",
+            "lineageTag": "4bffd938-e0d1-4181-840f-40cbc6f178fb"
+          },
+          {
+            "name": "Project Name",
+            "displayFolder": "Projects",
+            "expression": "FIRSTNONBLANK(Projects[Project name], 1)",
+            "lineageTag": "0a15ec4e-aab7-45f6-84bb-518af7f930ac"
+          },
+          {
+            "name": "Risks",
+            "displayFolder": "Risks & Issues",
+            "expression": [
+              "CALCULATE(",
+              "    DISTINCTCOUNT('Risk Register'[Risk / Issue ID])",
+              "    , 'Risk Register'[Item Type] = \"Risk\"",
+              ") // end calc"
+            ],
+            "formatString": "0",
+            "lineageTag": "9d9b440d-57c0-4bcd-bdb9-55589ac98e6d"
+          },
+          {
+            "name": "Issues",
+            "displayFolder": "Risks & Issues",
+            "expression": [
+              "CALCULATE(",
+              "    DISTINCTCOUNT('Risk Register'[Risk / Issue ID])",
+              "    , 'Risk Register'[Item Type] = \"Issue\"",
+              ") // end calc"
+            ],
+            "formatString": "0",
+            "lineageTag": "309768ee-f8e7-4cc9-97b3-cce974f9aaf9"
+          },
+          {
+            "name": "Decisions",
+            "expression": [
+              "CALCULATE(",
+              "    DISTINCTCOUNT('Decision Log'[Decision ID])",
+              ") // end calc"
+            ],
+            "formatString": "0",
+            "lineageTag": "519fe307-c55f-49e3-9410-5ab2efe14a17"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Measures Table",
+            "mode": "import",
+            "queryGroup": "00 Utilities",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"i44FAA==\", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(Source,{{\"Column1\", type text}}),",
+                "    #\"Removed Columns\" = Table.RemoveColumns(#\"Changed Type\",{\"Column1\"})",
+                "in",
+                "    #\"Removed Columns\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Index Health",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "changedProperties": [
+          {
+            "property": "Name"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Risk Grade",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "19e71089-ac9a-4841-bfec-1c0b7e22b8a8",
+            "sortByColumn": "Index",
+            "sourceColumn": "Risk Grade",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Index",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "be74c2dd-4251-4f2e-bf59-62661fbc6037",
+            "sourceColumn": "Index",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Colour",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "cdf3b36b-b133-4a06-97bf-5bd2478e238e",
+            "sortByColumn": "Index",
+            "sourceColumn": "Colour",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "f87d5f9d-5be9-4b57-85f3-3903bf37cf32",
+        "partitions": [
+          {
+            "name": "Index Health",
+            "mode": "import",
+            "queryGroup": "02 Index Tables",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"i45WCkpNUdJRMgZi5SRjAyBQitWJVopMzcnJLwcKGoEk0tKSk83MwBLuRampeUAxQ5C4sXFysrGxUmwsAA==\", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#\"Risk Grade\" = _t, Index = _t, Colour = _t]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(Source,{{\"Risk Grade\", type text}, {\"Index\", Int64.Type}, {\"Colour\", type text}})",
+                "in",
+                "    #\"Changed Type\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Index Category",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Index",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "bc3c8383-e806-460f-b48c-e032b82d4914",
+            "sourceColumn": "Index",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Category",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "f0006438-3822-41c3-ac16-eb8ac0cea887",
+            "sortByColumn": "Index",
+            "sourceColumn": "Category",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "0f5348b7-abf2-4936-9382-83443d20c873",
+        "partitions": [
+          {
+            "name": "Index Category",
+            "mode": "import",
+            "queryGroup": "02 Index Tables",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"i45WUvbzV/B1DHH2UNJRMlCK1YlWcnIMBbINwezg3MScHCDPCMzzTU3JLM0Fco3BXJ/EovRUIM9EKTYWAA==\", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Category = _t, Index = _t]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(Source,{{\"Category\", type text}, {\"Index\", Int64.Type}})",
+                "in",
+                "    #\"Changed Type\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Schedule Parents",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Exception"
+          }
+        ],
+        "changedProperties": [
+          {
+            "property": "IsHidden"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Project name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "c44ae6ad-e0fa-4fb4-80b7-3e9e3fc7f1f0",
+            "sourceColumn": "Project name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "18c82192-7f2b-483f-8418-80222e8b4f9b",
+            "sourceColumn": "Project Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Object Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "1a1dd35a-3d89-4c64-b5a5-10c4e6b6c458",
+            "sourceColumn": "Object Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "MS",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "ba3b6dc5-0694-4488-8b86-4970d69d72e2",
+            "sourceColumn": "MS",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Schedule Health",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "77850cb3-5d81-484c-9517-1c78de5fc57f",
+            "sourceColumn": "Schedule Health",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Task Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "391fb6fc-df8f-4188-a311-04c6de58e0cf",
+            "sourceColumn": "Task Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Update",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "3db15099-783e-4652-b25c-a6dcbf1c7631",
+            "sourceColumn": "Update",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Status",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "636ee747-a28d-4a31-bd45-c50e8501c5b9",
+            "sourceColumn": "Status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Assigned To",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "6003fa91-9fc0-4975-b609-89f6b6b2e7a6",
+            "sourceColumn": "Assigned To",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Start Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "General Date",
+            "isHidden": true,
+            "lineageTag": "fe579cf3-88d1-413d-87c7-fb467ed3813d",
+            "sourceColumn": "Start Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "End Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "General Date",
+            "isHidden": true,
+            "lineageTag": "7eb37037-3d2b-4d84-8ac4-74a22afff80a",
+            "sourceColumn": "End Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "% Complete",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "isHidden": true,
+            "lineageTag": "3885cfb7-71bf-48cb-9eb2-f91ef32dc875",
+            "sourceColumn": "% Complete",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Duration",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "80d2e9f4-57f7-4935-b0d4-f820d402636c",
+            "sourceColumn": "Duration",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Predecessors",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "0c91c302-5433-4fd5-bab0-836531cdd3e2",
+            "sourceColumn": "Predecessors",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Target Start Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "isHidden": true,
+            "lineageTag": "1039ed89-e790-412c-bea9-81b36a65cb19",
+            "sourceColumn": "Target Start Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Target End Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "isHidden": true,
+            "lineageTag": "7bbd908f-bec2-4c13-9674-b9428e2d5490",
+            "sourceColumn": "Target End Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Budget",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "9ed6488b-e98b-4c89-9a03-2232bf532c04",
+            "sourceColumn": "Budget",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Cost",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "753852fa-8086-468e-a977-a37d674a3335",
+            "sourceColumn": "Cost",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Current Spend",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "288da45a-3bc4-4c8c-9231-c2a897510af0",
+            "sourceColumn": "Current Spend",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Difference of Current Spend & Budget",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "5eaf7097-fd5a-425b-a0fe-fded3bab7b43",
+            "sourceColumn": "Difference of Current Spend & Budget",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Schedule Delta (%)",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "8e4fbe8b-7efc-44be-aabd-ef9cbb6c6788",
+            "sourceColumn": "Schedule Delta (%)",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Schedule Delta (Working Days)",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "94879541-eae2-4d0f-971f-cf14d7becd07",
+            "sourceColumn": "Schedule Delta (Working Days)",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "RowNumber",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "28da6fdb-7f1a-469d-b629-3e1b0c28fc6d",
+            "sourceColumn": "RowNumber",
+            "summarizeBy": "none"
+          }
+        ],
+        "isHidden": true,
+        "lineageTag": "8a215a39-942d-4bd9-b61d-b52e5c792f5e",
+        "partitions": [
+          {
+            "name": "Schedule Parents",
+            "mode": "import",
+            "queryGroup": "03 Projects\\03.03 Tables\\03.03.01 Schedule",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = #\"Schedule Table\",",
+                "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([MS] = true))",
+                "in",
+                "    #\"Filtered Rows\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Schedule Children",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "changedProperties": [
+          {
+            "property": "IsHidden"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Project name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "3a03e32b-c46b-46f1-a295-f6c3c9c94fbc",
+            "sourceColumn": "Project name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Project Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "496d063c-8785-4f13-b479-da3e5b49a253",
+            "sourceColumn": "Project Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Object Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "c467ca16-6adb-4c89-987b-e4815e3850ea",
+            "sourceColumn": "Object Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "MS",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "6049380e-b4ea-403f-9bfb-2208f33fb92e",
+            "sourceColumn": "MS",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Schedule Health",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "f119056f-1019-47f4-af14-46cd7c2382cd",
+            "sourceColumn": "Schedule Health",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Task Name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "d0b52e6a-8bc8-4c24-8958-30af447552a6",
+            "sourceColumn": "Task Name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Update",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "daaa6f3b-3231-416a-8944-39df4cc3f589",
+            "sourceColumn": "Update",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Status",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "7f7e54ad-8f46-4760-bad3-62f611c91956",
+            "sourceColumn": "Status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Assigned To",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "d233903b-5ca4-47c5-80c3-a13f536ce466",
+            "sourceColumn": "Assigned To",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Start Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "General Date",
+            "isHidden": true,
+            "lineageTag": "babce4e0-e0e0-467b-ae64-768b74a3fe56",
+            "sourceColumn": "Start Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "End Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "General Date",
+            "isHidden": true,
+            "lineageTag": "36d5d16e-57bc-4823-967e-c58243c56ae9",
+            "sourceColumn": "End Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "% Complete",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "double",
+            "isHidden": true,
+            "lineageTag": "5133bd42-e100-4a28-9ff1-ef79b2a018a9",
+            "sourceColumn": "% Complete",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Duration",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "18c704fa-5b78-405b-be12-b27422fac22d",
+            "sourceColumn": "Duration",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Predecessors",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "3354f1fe-9272-4061-9326-85d45add5365",
+            "sourceColumn": "Predecessors",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Target Start Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "isHidden": true,
+            "lineageTag": "843280e5-dbe2-4aa3-87fe-3c3cdd85b463",
+            "sourceColumn": "Target Start Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Target End Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "isHidden": true,
+            "lineageTag": "109286bf-adfc-4a35-86c0-d9f4cfc320d3",
+            "sourceColumn": "Target End Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Budget",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "aab1c004-a973-4b28-a450-50910c965509",
+            "sourceColumn": "Budget",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Cost",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "26d6fe93-05d6-417a-b276-1d24388adc85",
+            "sourceColumn": "Cost",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Current Spend",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "e088d498-9f74-449c-b4db-01374a9a8632",
+            "sourceColumn": "Current Spend",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Difference of Current Spend & Budget",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "8d8a9762-038c-4a37-9747-5b7a3eef3c17",
+            "sourceColumn": "Difference of Current Spend & Budget",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Schedule Delta (%)",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "f463f92c-8393-4936-b503-ac8b57a33be4",
+            "sourceColumn": "Schedule Delta (%)",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Schedule Delta (Working Days)",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isHidden": true,
+            "lineageTag": "cdc9dea6-5893-425f-9dba-f87fec71716e",
+            "sourceColumn": "Schedule Delta (Working Days)",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "RowNumber",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "IsHidden"
+              }
+            ],
+            "dataType": "string",
+            "isHidden": true,
+            "lineageTag": "968159a5-a2c8-4506-a29e-06a2077e899d",
+            "sourceColumn": "RowNumber",
+            "summarizeBy": "none"
+          }
+        ],
+        "isHidden": true,
+        "lineageTag": "12166c44-cbfa-4074-95ca-e6419fe0f488",
+        "partitions": [
+          {
+            "name": "Schedule Children",
+            "mode": "import",
+            "queryGroup": "03 Projects\\03.03 Tables\\03.03.01 Schedule",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = #\"Schedule Table\",",
+                "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([MS] <> true))",
+                "in",
+                "    #\"Filtered Rows\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Index Status",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Index",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "349e2165-de6d-4d85-8b7b-498e88d25367",
+            "sourceColumn": "Index",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Status",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "4904fca2-849d-4d1b-9909-db3f7a16c5ec",
+            "sortByColumn": "Index",
+            "sourceColumn": "Status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Terminal",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "boolean",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "3f18ce4c-e564-4946-8b36-183ba8776753",
+            "sourceColumn": "Terminal",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "d7b3e23b-b398-41ba-9f12-829781e89c6f",
+        "partitions": [
+          {
+            "name": "Index Status",
+            "mode": "import",
+            "queryGroup": "02 Index Tables",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"i45WCijKL8gvTsxR0lEyAGI3R59gV6VYnWglv/wSheCSxKKS1BSguCGKnH+egkd+DkjcCEXcM08BaF56UWpxMVDcGEXOOT+3ICe1JBUoaALEIUGhUPHEvOTUHLAllpZwiVgA\", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Status = _t, Index = _t, Terminal = _t]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(Source,{{\"Status\", type text}, {\"Index\", Int64.Type}, {\"Terminal\", type logical}})",
+                "in",
+                "    #\"Changed Type\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Project Contacts",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Project Key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "7d81b5a7-9c36-4e13-9028-74a271161ce6",
+            "sourceColumn": "Project Key",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Role",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "dd8d671e-e698-40bc-b3cb-b51ca3f1e3a9",
+            "sourceColumn": "Role",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "email",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "e8033efb-1b51-4d69-94cb-d0f5829f2470",
+            "sourceColumn": "email",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Email link",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataCategory": "WebUrl",
+            "dataType": "string",
+            "lineageTag": "40f173d0-dea5-4579-83c2-bcebdf7af40b",
+            "sourceColumn": "Email link",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "83a0f200-6fc2-4e1b-b6fa-9ca0374746ce",
+        "partitions": [
+          {
+            "name": "Project Contacts",
+            "mode": "import",
+            "queryGroup": "03 Projects\\03.03 Tables",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Metadata,",
+                "    #\"Removed Other Columns\" = Table.SelectColumns(Source,{\"Project Key\", \"Project Manager\", \"Project Sponsor\", \"Project Owner\"}),",
+                "    #\"Unpivoted Columns\" = Table.UnpivotOtherColumns(#\"Removed Other Columns\", {\"Project Key\"}, \"Role\", \"email\"),",
+                "    #\"Added mailto link col\" = Table.AddColumn(#\"Unpivoted Columns\", \"Email link\", each \"mailto:\" & [email])",
+                "in",
+                "    #\"Added mailto link col\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Portfolio Managers",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Portfolio Unit",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "8ce19c55-6453-498f-bfe5-7592fac2fd2f",
+            "sourceColumn": "Portfolio Unit",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Contact",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "eeb6daf2-e113-46cd-90b8-d393190f3f42",
+            "sourceColumn": "Contact",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "79eb2d25-057e-44f4-98a0-fa4ffb925df7",
+        "partitions": [
+          {
+            "name": "Portfolio Managers",
+            "mode": "import",
+            "queryGroup": "02 Index Tables",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"fcvLCYAwDADQVSRn6QwibuCxeEjbIJHWQj4Ft9cJvL8XI+wkgzNNG1UeJA/McCWXk1SXwpjISNHVBCtjyL0FdDjmCKsr35+a9keNmn7Rzt5Lw/snHi8=\", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#\"Portfolio Unit\" = _t, Contact = _t]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(Source,{{\"Portfolio Unit\", type text}, {\"Contact\", type text}})",
+                "in",
+                "    #\"Changed Type\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Index Roles",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Index",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "7d658608-c740-4610-9125-dc4075187562",
+            "sourceColumn": "Index",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Role",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "78d3d9a3-043c-4e25-ab1f-5fcbbaa30619",
+            "sortByColumn": "Index",
+            "sourceColumn": "Role",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "938ecbc2-92e3-43d2-af28-b959a73b8ad7",
+        "partitions": [
+          {
+            "name": "Index Roles",
+            "mode": "import",
+            "queryGroup": "02 Index Tables",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"i45WMlTSUQooys9KTS5RCC7IzyvOL1KK1YlWMkIS9y/PS4WIGiOJ+ibmJaaDxGMB\", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Index = _t, Role = _t]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(Source,{{\"Index\", Int64.Type}, {\"Role\", type text}})",
+                "in",
+                "    #\"Changed Type\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Index Risk Status",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Risk Status",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "137c972b-2f84-436f-9c93-9c7d95efb5f3",
+            "sortByColumn": "Index",
+            "sourceColumn": "Risk Status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Index",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "5e0cb2aa-8f48-4b31-b12a-106243cc8115",
+            "sourceColumn": "Index",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "d0e1d8ae-705c-4534-9840-e188cf0883b2",
+        "partitions": [
+          {
+            "name": "Index Risk Status",
+            "mode": "import",
+            "queryGroup": "02 Index Tables",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"i45Wcs7JL05NUdJRMlCK1YlWcsnMzczLLM7IzEsHihmCxYJLEpNyUoFcIzA3PLEkGSpvDBZwLU5OzEksgQiZKMXGAgA=\", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#\"Risk Status\" = _t, Index = _t]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(Source,{{\"Risk Status\", type text}, {\"Index\", Int64.Type}})",
+                "in",
+                "    #\"Changed Type\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Index Decision Status",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Decision Status",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "384ce566-ff36-437f-b936-ccf27f800dca",
+            "sortByColumn": "Index",
+            "sourceColumn": "Decision Status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Index",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "0a3bb595-bf4e-43ef-8138-ea00853f187d",
+            "sourceColumn": "Index",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "fae17255-f8d1-4d3c-a23a-58b8385c3943",
+        "partitions": [
+          {
+            "name": "Index Decision Status",
+            "mode": "import",
+            "queryGroup": "02 Index Tables",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"i45WCkjNS8nMS1fSUTJUitWJVnLNS8kvKk5NUdBXcCwoKMovS00ByllaKsXGAgA=\", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#\"Decision Status\" = _t, Index = _t]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(Source,{{\"Decision Status\", type text}, {\"Index\", Int64.Type}})",
+                "in",
+                "    #\"Changed Type\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
