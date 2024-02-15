@@ -12,11 +12,15 @@
       },
       {
         "name": "PBI_QueryOrder",
-        "value": "[\"Levels\",\"Portfolio\",\"Intake Sheet\",\"Projects Stg\",\"Reports\",\"PMO Templates\",\"Views\",\"Tables\",\"Portfolio Metrics\",\"Overdue\",\"Schedule Report\",\"Escalating Report\",\"Milestones\",\"Metadata\",\"Project Contacts\",\"Decision Log\",\"Schedule Table\",\"Risk Register\",\"Active Projects\",\"Intake\",\"At Risk\",\"Lessons Learned\",\"Projects\",\"Schedule Table (complete errors)\",\"Schedule Table (all errors)\",\"Measures Table\",\"Index Health\",\"Index Category\",\"Schedule Parents\",\"Schedule Children\",\"Project Status\",\"Index Status\",\"Portfolio Managers\",\"Index Roles\",\"Index Risk Status\",\"Index Decision Status\"]"
+        "value": "[\"Levels\",\"Portfolio\",\"Projects Stg\",\"Reports\",\"PMO Templates\",\"Views\",\"Tables\",\"Portfolio Metrics\",\"Overdue\",\"Schedule Report\",\"Escalating Report\",\"Milestones\",\"Metadata\",\"Project Contacts\",\"Decision Log\",\"Schedule Table\",\"Risk Register\",\"Active Projects\",\"Intake\",\"At Risk\",\"Lessons Learned\",\"Projects\",\"Intake Sheet\",\"Schedule Table (complete errors)\",\"Schedule Table (all errors)\",\"Measures Table\",\"Index Health\",\"Index Category\",\"Schedule Parents\",\"Schedule Children\",\"Project Status\",\"Index Status\",\"Portfolio Managers\",\"Index Roles\",\"Index Risk Status\",\"Index Decision Status\"]"
       },
       {
         "name": "PBI_ProTooling",
         "value": "[\"DevMode\"]"
+      },
+      {
+        "name": "__TEdtr",
+        "value": "1"
       }
     ],
     "culture": "en-US",
@@ -180,8 +184,8 @@
           "let",
           "    Source = Levels,",
           "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([Name] = \"Project Level\")),",
-          "    Custom1 = #\"Filtered Rows\"[Data],",
-          "    #\"Converted to Table\" = Table.FromList(Custom1, Splitter.SplitByNothing(), null, null, ExtraValues.Error),",
+          "    #\"Select data col\" = #\"Filtered Rows\"[Data],",
+          "    #\"Converted to Table\" = Table.FromList(#\"Select data col\", Splitter.SplitByNothing(), null, null, ExtraValues.Error),",
           "    #\"Expanded Column1\" = Table.ExpandTableColumn(#\"Converted to Table\", \"Column1\", {\"Name\", \"Key\", \"Data\", \"ItemKind\", \"ItemName\", \"IsLeaf\"}, {\"Name\", \"Key\", \"Data\", \"ItemKind\", \"ItemName\", \"IsLeaf\"}),",
           "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Expanded Column1\",{\"Name\", \"Key\", \"Data\"}), ",
           "    #\"Expanded Data\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data\", {\"Name\", \"Key\", \"Data\", \"ItemKind\", \"ItemName\", \"IsLeaf\"}, {\"Item\", \"Key.1\", \"Data.1\", \"ItemKind\", \"ItemName\", \"IsLeaf\"}),",
@@ -442,7 +446,7 @@
         ],
         "kind": "m",
         "lineageTag": "1f211c9c-ce69-4573-bf27-d886206cc73e",
-        "queryGroup": "03 Projects\\03.03 Tables"
+        "queryGroup": "03 Projects\\03.01 Staging"
       }
     ],
     "queryGroups": [
@@ -704,6 +708,68 @@
         "toTable": "Index Decision Status"
       }
     ],
+    "roles": [
+      {
+        "name": "PMO",
+        "annotations": [
+          {
+            "name": "PBI_Id",
+            "value": "0a37eb9e96424b008a4148d03c4f7a3b"
+          }
+        ],
+        "modelPermission": "read",
+        "tablePermissions": [
+          {
+            "name": "Risk Register",
+            "metadataPermission": "read"
+          },
+          {
+            "name": "Decision Log",
+            "metadataPermission": "read"
+          }
+        ]
+      },
+      {
+        "name": "Executive",
+        "annotations": [
+          {
+            "name": "PBI_Id",
+            "value": "8150ebb3b2814c76809083f9c3c647e8"
+          }
+        ],
+        "modelPermission": "read",
+        "tablePermissions": [
+          {
+            "name": "Decision Log",
+            "metadataPermission": "read"
+          },
+          {
+            "name": "Risk Register",
+            "metadataPermission": "read"
+          }
+        ]
+      },
+      {
+        "name": "Public",
+        "annotations": [
+          {
+            "name": "PBI_Id",
+            "value": "1ee0060c921243db8a098842e8c356c2"
+          }
+        ],
+        "modelPermission": "read",
+        "tablePermissions": [
+          {
+            "name": "Decision Log",
+            "metadataPermission": "none"
+          },
+          {
+            "name": "Risk Register",
+            "metadataPermission": "none"
+          }
+        ]
+      }
+    ],
     "sourceQueryCulture": "en-AU",
     "tables": [
       {
@@ -712,6 +778,10 @@
           {
             "name": "PBI_ResultType",
             "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
           }
         ],
         "columns": [
@@ -893,11 +963,19 @@
               {
                 "name": "SummarizationSetBy",
                 "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isDateTimeCustom\":true}"
               }
             ],
             "dataType": "dateTime",
             "displayFolder": "Dates",
-            "formatString": "General Date",
+            "formatString": "yyyy-mm-dd",
             "lineageTag": "295bb779-6a8e-478e-9a05-04b7770ed92d",
             "sourceColumn": "Submission Date",
             "summarizeBy": "none"
@@ -915,7 +993,7 @@
             "formatString": "0",
             "lineageTag": "aeb40a79-bdf4-445a-a2fc-84ed8d06d382",
             "sourceColumn": "Days since Submission",
-            "summarizeBy": "average"
+            "summarizeBy": "none"
           }
         ],
         "lineageTag": "602dffd9-c9ca-4384-830d-883716832c4b",
@@ -923,7 +1001,7 @@
           {
             "name": "Intake Sheet",
             "mode": "import",
-            "queryGroup": "01 Load\\01.02 Staging",
+            "queryGroup": "03 Projects\\03.03 Tables",
             "source": {
               "expression": [
                 "let",
@@ -935,11 +1013,11 @@
                 "    // Top row repeats the column headers",
                 "    #\"Removed Top Row\" = Table.Skip(#\"Expanded Column1\",1),",
                 "    #\"Filtered Rows1\" = Table.SelectRows(#\"Removed Top Row\", each [Project ID] <> null and [Project ID] <> \"\"),",
-                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Filtered Rows1\",{{\"Submission Date\", type datetimezone}, {\"Start Date\", type date}, {\"End Date\", type date}}),",
-                "    #\"Added Days since submitted\" = Table.AddColumn(#\"Changed Type\", \"Days since Submission\", each Duration.Days(DateTime.LocalNow() - DateTime.From([Submission Date]))),",
-                "    #\"Changed Type1\" = Table.TransformColumnTypes(#\"Added Days since submitted\",{{\"Days since Submission\", Int64.Type}})",
+                "    #\"Changed to date or datetimezone\" = Table.TransformColumnTypes(#\"Filtered Rows1\",{{\"Submission Date\", type datetimezone}, {\"Start Date\", type date}, {\"End Date\", type date}}),",
+                "    #\"Changed timezone to date\" = Table.TransformColumnTypes(#\"Changed to date or datetimezone\",{{\"Submission Date\", type date}}),",
+                "    #\"Added Days since submitted\" = Table.AddColumn(#\"Changed timezone to date\", \"Days since Submission\", each Duration.Days(DateTime.Date(DateTime.LocalNow()) - ([Submission Date])), Int64.Type)",
                 "in",
-                "    #\"Changed Type1\""
+                "    #\"Added Days since submitted\""
               ],
               "type": "m"
             }
@@ -1643,10 +1721,6 @@
           {
             "name": "PBI_ResultType",
             "value": "Exception"
-          },
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
           }
         ],
         "columns": [
@@ -1867,10 +1941,6 @@
           {
             "name": "PBI_ResultType",
             "value": "Table"
-          },
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
           }
         ],
         "columns": [
@@ -2105,10 +2175,6 @@
           {
             "name": "PBI_ResultType",
             "value": "Table"
-          },
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
           }
         ],
         "columns": [
@@ -2490,10 +2556,6 @@
           {
             "name": "PBI_ResultType",
             "value": "Table"
-          },
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
           }
         ],
         "columns": [
@@ -2993,10 +3055,6 @@
           {
             "name": "PBI_ResultType",
             "value": "Exception"
-          },
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
           }
         ],
         "columns": [
@@ -3169,7 +3227,11 @@
         "annotations": [
           {
             "name": "PBI_ResultType",
-            "value": "Table"
+            "value": "Exception"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
           }
         ],
         "columns": [
@@ -3508,7 +3570,7 @@
           {
             "name": "Projects",
             "mode": "import",
-            "queryGroup": "03 Projects",
+            "queryGroup": "03 Projects\\03.03 Tables",
             "source": {
               "expression": [
                 "let",
@@ -3586,6 +3648,7 @@
               "CALCULATE(",
               "    [Active Projects]",
               "    , Projects[Schedule At Risk] = \"Red\"",
+              "    // Checks program metadata to see if schedule health is {\"red\"}",
               ") // end calc"
             ],
             "formatString": "0",
@@ -3630,6 +3693,7 @@
               "CALCULATE(",
               "    [Active Projects]",
               "    , Projects[At Risk] = TRUE",
+              "    // comes from SmartSheets \"Projects at Risk\" report, which is itself checking if schedule health is in {\"orange\", \"red\"}",
               ") // end calc"
             ],
             "formatString": "0",
@@ -3667,6 +3731,7 @@
           },
           {
             "name": "Decisions",
+            "displayFolder": "Decisions",
             "expression": [
               "CALCULATE(",
               "    DISTINCTCOUNT('Decision Log'[Decision ID])",
@@ -3674,6 +3739,49 @@
             ],
             "formatString": "0",
             "lineageTag": "519fe307-c55f-49e3-9410-5ab2efe14a17"
+          },
+          {
+            "name": "Average days since submission",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "displayFolder": "Proposals\\Triage",
+            "expression": [
+              "CALCULATE(",
+              "    AVERAGE('Intake Sheet'[Days since Submission])",
+              "    , Projects[Project Status] = \"Proposal\"",
+              ")"
+            ],
+            "lineageTag": "42b950cc-c5ed-4014-9519-d50a6358aa61"
+          },
+          {
+            "name": "Target average for proposal triage",
+            "displayFolder": "Proposals\\Triage",
+            "expression": "60",
+            "formatString": "0",
+            "lineageTag": "5133d3ba-33e1-4fed-bcf9-685f187244a4"
+          },
+          {
+            "name": "Triage maximum days",
+            "displayFolder": "Proposals\\Triage",
+            "expression": "120",
+            "formatString": "0",
+            "lineageTag": "f88e5e2e-d8fb-4925-a02a-fa60dbb562e3"
+          },
+          {
+            "name": "Proposals past tirage target",
+            "displayFolder": "Proposals\\Triage",
+            "expression": [
+              "CALCULATE(",
+              "    [Proposals]",
+              "    , FILTER('Intake Sheet', 'Intake Sheet'[Days since Submission] >= [Target average for proposal triage])",
+              ") "
+            ],
+            "formatString": "0",
+            "lineageTag": "224dd532-a10b-45cc-a4cb-f440a0de2a52"
           }
         ],
         "partitions": [
@@ -4916,7 +5024,7 @@
         "annotations": [
           {
             "name": "PBI_ResultType",
-            "value": "Table"
+            "value": "Exception"
           },
           {
             "name": "PBI_NavigationStepName",
