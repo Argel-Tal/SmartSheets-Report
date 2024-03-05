@@ -5,7 +5,7 @@
       "ordinal": 0,
       "scrollPosition": {
         "x": 0,
-        "y": 0
+        "y": 4.7036661879883228
       },
       "nodes": [
         {
@@ -32,7 +32,7 @@
             "height": 300,
             "width": 234
           },
-          "zIndex": 4
+          "zIndex": 5
         },
         {
           "location": {
@@ -49,8 +49,8 @@
         },
         {
           "location": {
-            "x": 1478.0507540665506,
-            "y": 1010.1510771605651
+            "x": 634.38811182517463,
+            "y": 1068.964097893738
           },
           "nodeIndex": "Milestones",
           "nodeLineageTag": "7bb3f06c-cb66-4505-b7ec-32d53548c45c",
@@ -71,7 +71,7 @@
             "height": 206.64766376440429,
             "width": 234
           },
-          "zIndex": 5
+          "zIndex": 6
         },
         {
           "location": {
@@ -84,7 +84,7 @@
             "height": 167.98954917481962,
             "width": 234
           },
-          "zIndex": 8
+          "zIndex": 20
         },
         {
           "location": {
@@ -97,7 +97,7 @@
             "height": 208.63388368431049,
             "width": 234
           },
-          "zIndex": 7
+          "zIndex": 8
         },
         {
           "location": {
@@ -123,7 +123,7 @@
             "height": 200,
             "width": 234
           },
-          "zIndex": 6
+          "zIndex": 7
         },
         {
           "location": {
@@ -149,7 +149,7 @@
             "height": 104,
             "width": 234
           },
-          "zIndex": 3
+          "zIndex": 4
         },
         {
           "location": {
@@ -214,7 +214,7 @@
             "height": 128,
             "width": 234
           },
-          "zIndex": 2
+          "zIndex": 3
         },
         {
           "location": {
@@ -253,7 +253,7 @@
             "height": 128,
             "width": 234
           },
-          "zIndex": 20
+          "zIndex": 21
         },
         {
           "location": {
@@ -265,7 +265,7 @@
             "height": 152,
             "width": 234
           },
-          "zIndex": 1
+          "zIndex": 2
         },
         {
           "location": {
@@ -278,11 +278,11 @@
             "height": 128,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 1
         }
       ],
       "name": "All tables",
-      "zoomValue": 49.30880889721562,
+      "zoomValue": 63.780036254720883,
       "pinKeyFieldsToTop": false,
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,

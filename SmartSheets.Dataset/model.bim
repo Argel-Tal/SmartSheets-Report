@@ -8,7 +8,7 @@
       },
       {
         "name": "PBIDesktopVersion",
-        "value": "2.124.2028.0 (23.12)"
+        "value": "2.126.927.0 (24.02)"
       },
       {
         "name": "PBI_QueryOrder",
@@ -65,15 +65,11 @@
         ],
         "kind": "m",
         "lineageTag": "61b1c538-afb1-460c-9669-cf79c7e8ef9d",
-        "queryGroup": "01 Load\\01.01 Source"
+        "queryGroup": "01 Connection to SmartSheets\\01.01 Source"
       },
       {
         "name": "Reports",
         "annotations": [
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
-          },
           {
             "name": "PBI_ResultType",
             "value": "Table"
@@ -91,15 +87,11 @@
         ],
         "kind": "m",
         "lineageTag": "08535fd8-f8ec-40f0-9c94-e5624c735d3a",
-        "queryGroup": "01 Load\\01.04 Reports"
+        "queryGroup": "01 Connection to SmartSheets\\01.04 Reports"
       },
       {
         "name": "Portfolio",
         "annotations": [
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
-          },
           {
             "name": "PBI_ResultType",
             "value": "Table"
@@ -117,7 +109,7 @@
         ],
         "kind": "m",
         "lineageTag": "58766cd9-e75e-4f15-8734-dbc2ccd7100d",
-        "queryGroup": "01 Load\\01.02 Staging"
+        "queryGroup": "01 Connection to SmartSheets\\01.02 Staging"
       },
       {
         "name": "Views",
@@ -172,12 +164,8 @@
         "name": "Projects Stg",
         "annotations": [
           {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
-          },
-          {
             "name": "PBI_ResultType",
-            "value": "Table"
+            "value": "Exception"
           }
         ],
         "expression": [
@@ -196,15 +184,11 @@
         ],
         "kind": "m",
         "lineageTag": "447cf894-87af-4a55-979f-7c45cd054e13",
-        "queryGroup": "01 Load\\01.02 Staging"
+        "queryGroup": "01 Connection to SmartSheets\\01.02 Staging"
       },
       {
         "name": "PMO Templates",
         "annotations": [
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
-          },
           {
             "name": "PBI_ResultType",
             "value": "Table"
@@ -224,7 +208,7 @@
         ],
         "kind": "m",
         "lineageTag": "56316f8f-c3a1-4425-8117-bc37a5a72d09",
-        "queryGroup": "01 Load\\01.03 Templates"
+        "queryGroup": "01 Connection to SmartSheets\\01.03 Templates"
       },
       {
         "name": "Escalating Report",
@@ -339,10 +323,6 @@
         "name": "Active Projects",
         "annotations": [
           {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
-          },
-          {
             "name": "PBI_ResultType",
             "value": "Table"
           }
@@ -360,15 +340,11 @@
         ],
         "kind": "m",
         "lineageTag": "3493da7a-4d2b-4983-8d34-67a852269c81",
-        "queryGroup": "01 Load\\01.04 Reports"
+        "queryGroup": "01 Connection to SmartSheets\\01.04 Reports"
       },
       {
         "name": "Intake",
         "annotations": [
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
-          },
           {
             "name": "PBI_ResultType",
             "value": "Table"
@@ -386,15 +362,11 @@
         ],
         "kind": "m",
         "lineageTag": "5f1823e6-fbb6-4f79-9845-c840f9660ed1",
-        "queryGroup": "01 Load\\01.04 Reports"
+        "queryGroup": "01 Connection to SmartSheets\\01.04 Reports"
       },
       {
         "name": "At Risk",
         "annotations": [
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
-          },
           {
             "name": "PBI_ResultType",
             "value": "Table"
@@ -413,7 +385,7 @@
         ],
         "kind": "m",
         "lineageTag": "07e62d0b-babf-45df-bdfa-2bd9439ffcda",
-        "queryGroup": "01 Load\\01.04 Reports"
+        "queryGroup": "01 Connection to SmartSheets\\01.04 Reports"
       },
       {
         "name": "Metadata",
@@ -454,28 +426,10 @@
         "annotations": [
           {
             "name": "PBI_QueryGroupOrder",
-            "value": "1"
-          }
-        ],
-        "folder": "01 Load"
-      },
-      {
-        "annotations": [
-          {
-            "name": "PBI_QueryGroupOrder",
             "value": "3"
           }
         ],
         "folder": "03 Projects"
-      },
-      {
-        "annotations": [
-          {
-            "name": "PBI_QueryGroupOrder",
-            "value": "2"
-          }
-        ],
-        "folder": "01 Load\\01.03 Templates"
       },
       {
         "annotations": [
@@ -503,33 +457,6 @@
           }
         ],
         "folder": "03 Projects\\03.03 Tables"
-      },
-      {
-        "annotations": [
-          {
-            "name": "PBI_QueryGroupOrder",
-            "value": "0"
-          }
-        ],
-        "folder": "01 Load\\01.01 Source"
-      },
-      {
-        "annotations": [
-          {
-            "name": "PBI_QueryGroupOrder",
-            "value": "1"
-          }
-        ],
-        "folder": "01 Load\\01.02 Staging"
-      },
-      {
-        "annotations": [
-          {
-            "name": "PBI_QueryGroupOrder",
-            "value": "3"
-          }
-        ],
-        "folder": "01 Load\\01.04 Reports"
       },
       {
         "annotations": [
@@ -566,6 +493,51 @@
           }
         ],
         "folder": "03 Projects\\03.03 Tables\\03.03.01 Schedule"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "1"
+          }
+        ],
+        "folder": "01 Connection to SmartSheets"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "2"
+          }
+        ],
+        "folder": "01 Connection to SmartSheets\\01.03 Templates"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "0"
+          }
+        ],
+        "folder": "01 Connection to SmartSheets\\01.01 Source"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "1"
+          }
+        ],
+        "folder": "01 Connection to SmartSheets\\01.02 Staging"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "3"
+          }
+        ],
+        "folder": "01 Connection to SmartSheets\\01.04 Reports"
       }
     ],
     "relationships": [
@@ -585,6 +557,7 @@
       },
       {
         "name": "f0d4f44b-d28a-4d63-b86d-ab5cb0b5da7a",
+        "crossFilteringBehavior": "bothDirections",
         "fromColumn": "Project Key",
         "fromTable": "Risk Register",
         "toColumn": "Project Key",
@@ -1156,7 +1129,7 @@
           {
             "name": "Portfolio Metrics",
             "mode": "import",
-            "queryGroup": "01 Load\\01.04 Reports",
+            "queryGroup": "01 Connection to SmartSheets\\01.04 Reports",
             "source": {
               "expression": [
                 "let",
@@ -1940,7 +1913,11 @@
         "annotations": [
           {
             "name": "PBI_ResultType",
-            "value": "Table"
+            "value": "Exception"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
           }
         ],
         "columns": [
@@ -2143,6 +2120,19 @@
             "lineageTag": "32693fc4-9933-4375-bb7b-29656766b63d",
             "sourceColumn": "Modified By",
             "summarizeBy": "none"
+          },
+          {
+            "name": "Portfolio level ID",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "7c4a2762-a981-4f63-82a5-709d8cd8e825",
+            "sourceColumn": "Portfolio level ID",
+            "summarizeBy": "none"
           }
         ],
         "lineageTag": "d4061466-6e34-4745-bea7-c2f53cc59cdf",
@@ -2160,9 +2150,11 @@
                 "    #\"Expanded Data.1\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data.1\", {\"Decision ID\", \"Decision Owner\", \"Decision Title\", \"Created Date\", \"Due Date\", \"Decision Description\", \"Status\", \"Comments\", \"Related documents / risks / issues\", \"Modified By\"}, {\"Decision ID\", \"Decision Owner\", \"Decision Title\", \"Created Date\", \"Due Date\", \"Decision Description\", \"Status\", \"Comments\", \"Related documents / risks / issues\", \"Modified By\"}),",
                 "    #\"Changed to Date\" = Table.TransformColumnTypes(#\"Expanded Data.1\",{{\"Created Date\", type date}, {\"Due Date\", type date}}),",
                 "    // not == \"test\"",
-                "    #\"Filtered not placeholder text\" = Table.SelectRows(#\"Changed to Date\", each not ((Text.Lower([Decision Title]) = \"test\") or [Decision ID] = null))",
+                "    #\"Filtered not placeholder text\" = Table.SelectRows(#\"Changed to Date\", each not ((Text.Lower([Decision Title]) = \"test\") or [Decision ID] = null)),",
+                "    // Countable ID at a portfolio level needs both project key and decision ID, as each project has decision 01, 02...",
+                "    #\"Added Portfolio level ID\" = Table.AddColumn(#\"Filtered not placeholder text\", \"Portfolio level ID\", each [Project Key] & \"-\" & [Decision ID])",
                 "in",
-                "    #\"Filtered not placeholder text\""
+                "    #\"Added Portfolio level ID\""
               ],
               "type": "m"
             }
@@ -2556,6 +2548,10 @@
           {
             "name": "PBI_ResultType",
             "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
           }
         ],
         "columns": [
@@ -3022,6 +3018,47 @@
             "lineageTag": "b5e814e8-59a0-48c7-825e-acb440d59388",
             "sourceColumn": "Item Type",
             "summarizeBy": "none"
+          },
+          {
+            "name": "Updated within 4wks",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "boolean",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "223a5d13-d093-40dd-ba49-d1ac52323193",
+            "sourceColumn": "Updated within 4wks",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Portfolio level ID",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "f698e2c4-18ce-4f97-be29-a56070b34524",
+            "sourceColumn": "Portfolio level ID",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Days since update",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "89d7c6f9-b35d-4670-855b-cb75484c321d",
+            "sourceColumn": "Days since update",
+            "summarizeBy": "none"
           }
         ],
         "lineageTag": "7bcb1ec8-3476-4c99-89c0-16dc162793c2",
@@ -3040,9 +3077,18 @@
                 "    #\"Changed to datetimezone\" = Table.TransformColumnTypes(#\"Expanded Risk Register\",{{\"Modified\", type datetimezone}}),",
                 "    #\"Filtered area not blank\" = Table.SelectRows(#\"Changed to datetimezone\", each [Area] <> null and [Area] <> \"\"),",
                 "    // not blank, not null, not placeholder text",
-                "    #\"Added Mitigation in place\" = Table.AddColumn(#\"Filtered area not blank\", \"Mitigation in Place\", each [Mitigation] <> null and [Mitigation] <> \"\" and not(Text.Contains([Mitigation], \"xx\")), type logical)",
+                "    #\"Added Mitigation in place\" = Table.AddColumn(#\"Filtered area not blank\", \"Mitigation in Place\", each [Mitigation] <> null and [Mitigation] <> \"\" and not(Text.Contains([Mitigation], \"xx\")), type logical),",
+                "    #\"Added days since update\" = Table.AddColumn(#\"Added Mitigation in place\", \"Days since update\", each Duration.Days(",
+                "    DateTime.Date([Modified]) ",
+                "    - ",
+                "    Date.From(List.Max(#\"Added Mitigation in place\"[Modified])) // end max of list",
+                "), Int64.Type // end calc",
+                "),",
+                "    #\"Added has been recently updated\" = Table.AddColumn(#\"Added days since update\", \"Updated within 4wks\", each ([Days since update] > - 4*7), type logical),",
+                "    // Countable ID at a portfolio level needs both project key and risk ID, as each project has risk 01, 02...",
+                "    #\"Added project level ID\" = Table.AddColumn(#\"Added has been recently updated\", \"Portfolio level ID\", each [Project Key] & \"-\" & [#\"Risk / Issue ID\"])",
                 "in",
-                "    #\"Added Mitigation in place\""
+                "    #\"Added project level ID\""
               ],
               "type": "m"
             }
@@ -3054,7 +3100,11 @@
         "annotations": [
           {
             "name": "PBI_ResultType",
-            "value": "Exception"
+            "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
           }
         ],
         "columns": [
@@ -3197,6 +3247,20 @@
             "lineageTag": "5f6c6328-9f26-4cac-856f-6763f911d474",
             "sourceColumn": "Modified By",
             "summarizeBy": "none"
+          },
+          {
+            "name": "Index",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "ad2239e1-7da5-4f99-9ba2-b5118ed0993d",
+            "sourceColumn": "Index",
+            "summarizeBy": "sum"
           }
         ],
         "lineageTag": "32aca6ac-0452-4092-9ebe-ac4d5ac50a3b",
@@ -3213,9 +3277,10 @@
                 "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered only Lessons Learnt\",{\"Project name\", \"Project Key\", \"Object Key\", \"Data.1\"}),",
                 "    #\"Expanded Lessons Learnt\" = Table.ExpandTableColumn(#\"Removed Other Columns\", \"Data.1\", {\"Key Lessons\", \"Project stage\", \"Key Recommendations/ Tips for the future\", \"Any other feedback\", \"Name of Project team member\", \"Modified\", \"Modified By\"}, {\"Key Lessons\", \"Project stage\", \"Key Recommendations/ Tips for the future\", \"Any other feedback\", \"Name of Project team member\", \"Modified\", \"Modified By\"}),",
                 "    #\"Filtered lessons not null\" = Table.SelectRows(#\"Expanded Lessons Learnt\", each [Key Lessons] <> null and [Key Lessons] <> \"\"),",
-                "    #\"Changed to datetimezone\" = Table.TransformColumnTypes(#\"Filtered lessons not null\",{{\"Modified\", type datetimezone}})",
+                "    #\"Changed to datetimezone\" = Table.TransformColumnTypes(#\"Filtered lessons not null\",{{\"Modified\", type datetimezone}}),",
+                "    #\"Added Index\" = Table.AddIndexColumn(#\"Changed to datetimezone\", \"Index\", 0, 1, Int64.Type)",
                 "in",
-                "    #\"Changed to datetimezone\""
+                "    #\"Added Index\""
               ],
               "type": "m"
             }
@@ -3710,11 +3775,10 @@
             "displayFolder": "Risks & Issues",
             "expression": [
               "CALCULATE(",
-              "    DISTINCTCOUNT('Risk Register'[Risk / Issue ID])",
+              "    DISTINCTCOUNT('Risk Register'[Portfolio level ID])",
               "    , 'Risk Register'[Item Type] = \"Risk\"",
               ") // end calc"
             ],
-            "formatString": "0",
             "lineageTag": "9d9b440d-57c0-4bcd-bdb9-55589ac98e6d"
           },
           {
@@ -3722,11 +3786,10 @@
             "displayFolder": "Risks & Issues",
             "expression": [
               "CALCULATE(",
-              "    DISTINCTCOUNT('Risk Register'[Risk / Issue ID])",
+              "    DISTINCTCOUNT('Risk Register'[Portfolio level ID])",
               "    , 'Risk Register'[Item Type] = \"Issue\"",
               ") // end calc"
             ],
-            "formatString": "0",
             "lineageTag": "309768ee-f8e7-4cc9-97b3-cce974f9aaf9"
           },
           {
@@ -3734,7 +3797,7 @@
             "displayFolder": "Decisions",
             "expression": [
               "CALCULATE(",
-              "    DISTINCTCOUNT('Decision Log'[Decision ID])",
+              "    DISTINCTCOUNT('Decision Log'[Portfolio level ID])",
               ") // end calc"
             ],
             "formatString": "0",
@@ -3782,6 +3845,25 @@
             ],
             "formatString": "0",
             "lineageTag": "224dd532-a10b-45cc-a4cb-f440a0de2a52"
+          },
+          {
+            "name": "Risks & Issues",
+            "displayFolder": "Risks & Issues",
+            "expression": "[Risks] + [Issues]",
+            "formatString": "0",
+            "lineageTag": "8bbc26eb-bd7d-4670-b383-d3feb1fcee3d"
+          },
+          {
+            "name": "Items without a recent update",
+            "displayFolder": "Risks & Issues",
+            "expression": [
+              "CALCULATE(",
+              "    [Risks & Issues]",
+              "    , 'Risk Register'[Updated within 4wks] = FALSE",
+              ")"
+            ],
+            "formatString": "0",
+            "lineageTag": "2e02d9d6-cad1-48ca-95ec-1ef0d60a5500"
           }
         ],
         "partitions": [
@@ -5273,6 +5355,32 @@
             "lineageTag": "5e0cb2aa-8f48-4b31-b12a-106243cc8115",
             "sourceColumn": "Index",
             "summarizeBy": "none"
+          },
+          {
+            "name": "Colour",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "3b1e824d-5702-4018-99a8-4ba38b06ef2a",
+            "sourceColumn": "Colour",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Grouping",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "e34f1422-de7e-4f71-b27e-c7586a39f79d",
+            "sourceColumn": "Grouping",
+            "summarizeBy": "none"
           }
         ],
         "lineageTag": "d0e1d8ae-705c-4534-9840-e188cf0883b2",
@@ -5284,7 +5392,7 @@
             "source": {
               "expression": [
                 "let",
-                "    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"i45Wcs7JL05NUdJRMlCK1YlWcsnMzczLLM7IzEsHihmCxYJLEpNyUoFcIzA3PLEkGSpvDBZwLU5OzEksgQiZKMXGAgA=\", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#\"Risk Status\" = _t, Index = _t]),",
+                "    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"i45Wcs7JL05NUdJRMgBi5aQ0EATzYnWilVwyczPzMoszMvPSgWKGIBXGxsnJxsZgHkhFcEliUk4qkGuERTI8sSQZqhckqJyWlpxsZgZWDJJ2zU0tSodIm2CTLk5OzEksgSgwBbvO2AAIwKbFxgIA\", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#\"Risk Status\" = _t, Index = _t, Colour = _t, Grouping = _t]),",
                 "    #\"Changed Type\" = Table.TransformColumnTypes(Source,{{\"Risk Status\", type text}, {\"Index\", Int64.Type}})",
                 "in",
                 "    #\"Changed Type\""
