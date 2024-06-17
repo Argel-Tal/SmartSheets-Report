@@ -1,12 +1,12 @@
 {
-  "name": "MH4L Brand Colours",
+  "name": "YourOrg Brand Colours",
   "dataColors": [
-    "#1C4A9F",
-    "#009EDE",
-    "#94D9F8",
-    "#00205B",
-    "#147fa5",
-    "#243E4F",
+    "#5B217C",
+    "#2BB8C8",
+    "#F6EEE8",
+    "#FFE400",
+    "#5F6B6D",
+    "#8AD4EB",
     "#FE9666",
     "#A66999",
     "#3599B8",
@@ -481,34 +481,5 @@
     "#493452",
     "#0D2E25",
     "#54484E"
-  ],
-  "visualStyles": {
-    "page": {
-      "*": {
-        "background": [
-          {
-            "color": {
-              "solid": {
-                "color": "#FFFFFF"
-              }
-            },
-            "transparency": 100
-          }
-        ]
-      }
-    },
-    "*": {
-      "*": {
-        "outspacePane": [
-          {
-            "checkboxAndApplyColor": {
-              "solid": {
-                "color": "#5B217C"
-              }
-            }
-          }
-        ]
-      }
-    }
-  }
+  ]
 }
