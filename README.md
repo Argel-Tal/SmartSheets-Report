@@ -5,13 +5,13 @@ Automated report replacing the monthly PMO project rolllup, based on the prior S
 ## Pages
 Page | About	| Image
 -----|----------|---------
-Landing	| An overview of the PMO's portfolio, the size and spread of those projects. |	![Landing](readMeImages\01Landing.png)
-Project list	| A list of all the current and previous projects, with key callouts	|	![Project list](readMeImages\02List.png)
-Project detail	| Provides an overview of the selected project, it's health, sponsors and key contacts (which include mailto links) | ![Project detail](readMeImages\03Drill.png)
-Risks	| Provides an overview of the risks related to the specific project | ![Risks](readMeImages\04Risks.png)
-Decisions	|	Provides an overview of the decisions related to the specific project | ![Decisions](readMeImages\05Decisions.png)
-Proposed projects list | Outlines the projects which have yet to be scoped and accepted / declined	| ![Proposed projects list](readMeImages\06Proposals.png)
-Portfolio risk summary | Provides an overview of the PMO's risk exposure, and calls out the projects with the most emerging risks or issues	| ![Portfolio risk summary](readMeImages\07Summary.png)
+Landing	| An overview of the PMO's portfolio, the size and spread of those projects. | <img src="readMeImages\01Landing.png" width="800" Landing>
+Project list	| A list of all the current and previous projects, with key callouts	|	<img src="readMeImages\02List.png" width="800" Project list>
+Project detail	| Provides an overview of the selected project, it's health, sponsors and key contacts (which include mailto links) | <img src="readMeImages\03Drill.png" width="800" Project detail page dependancies>
+Risks	| Provides an overview of the risks related to the specific project | <img src="readMeImages\04Risks.png" width="800" Risks>
+Decisions	|	Provides an overview of the decisions related to the specific project | <img src="readMeImages\05Decisions.png" width="800" Decisions>
+Proposed projects list | Outlines the projects which have yet to be scoped and accepted / declined	| <img src="readMeImages\06Proposals.png" width="800" Proposed projects list>
+Portfolio risk summary | Provides an overview of the PMO's risk exposure, and calls out the projects with the most emerging risks or issues	| <img src="readMeImages\07Summary.png" width="800" Portfolio risk summary>
 
 ## Datasets - TODO
 ### Connection process
@@ -20,10 +20,11 @@ Pulls queries from the three (3) components of SmartSheets, via the public Power
 - Views
 - Reports
 
-![Query dependancies](readMeImages\Load.png)
+<img src="readMeImages\Load.png" width="800" Query dependancies>
 
 ### Schema
-![Relationship diagram](readMeImages\Schema.png)
+<img src="readMeImages\Schema.png" width="800" Relationship diagram>
+
 ### Tables
 
 Table | Defintion
