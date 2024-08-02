@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "SmartSheets"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "104ed7cf-cd8e-4d4d-b977-1b2dbc3eddd7"
+  }
+}

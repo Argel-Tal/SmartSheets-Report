@@ -8,7 +8,7 @@
       },
       {
         "name": "PBIDesktopVersion",
-        "value": "2.126.1261.0 (24.02)"
+        "value": "2.131.1126.0 (24.07)"
       },
       {
         "name": "PBI_QueryOrder",
@@ -29,7 +29,6 @@
         "name": "en-US",
         "linguisticMetadata": {
           "content": {
-            "DynamicImprovement": "HighConfidence",
             "Language": "en-US",
             "Version": "1.0.0"
           },
@@ -5195,6 +5194,10 @@
           {
             "name": "PBI_ResultType",
             "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
           }
         ],
         "columns": [
@@ -5234,7 +5237,7 @@
             "source": {
               "expression": [
                 "let",
-                "    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"fcvLCYAwDADQVSRn6QwibuCxeEjbIJHWQj4Ft9cJvL8XI+wkgzNNG1UeJA/McCWXk1SXwpjISNHVBCtjyL0FdDjmCKsr35+a9keNmn7Rzt5Lw/snHi8=\", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#\"Portfolio Unit\" = _t, Contact = _t]),",
+                "    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"i45WCk4tKstMTlVwSc3JLEstqlTSUXL1dfT0UTBUitWJVnIqLc7MSy0uVgiuLC5JzS2GSxspxcYCAA==\", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#\"Portfolio Unit\" = _t, Contact = _t]),",
                 "    #\"Changed Type\" = Table.TransformColumnTypes(Source,{{\"Portfolio Unit\", type text}, {\"Contact\", type text}})",
                 "in",
                 "    #\"Changed Type\""
